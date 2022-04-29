@@ -1,0 +1,111 @@
+
+/* product previews / list */
+.products__container {
+  display: grid;
+  gap: 5%;
+  /* left: -30%; */
+  /* height:85vh ; */
+  /* padding:5rem; */
+  /* bottom: 7rem; */
+  overflow: hidden;
+  flex-grow: 1;
+    align-items: center;
+    /* text-align: match-parent; */
+    height: 100%;
+    padding-top: 6rem;
+}
+  
+.products__title {
+
+
+  text-align: center;
+}
+
+.about__me {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 2rem;
+  background: linear-gradient(45deg, transparent,var(--color-primary), transparent);
+  display: grid;
+  place-items: center;
+}
+
+
+.product__cards {
+  display: grid;
+  /* align-items: center;
+  text-align: match-parent; */
+  position: relative;
+}
+
+.product__card {
+  background: var(--color-bg-variant);
+  border:1px solid transparent ;
+  border-radius: 1rem;
+  width: fit-content;
+  padding: 2rem;
+  transition: var(--transition);
+}
+
+.product__card:hover {
+  background: transparent;
+  border-color: var(--color-primary-variant);
+  cursor: default;
+}
+
+
+
+.product__card h5 {
+  font-size: 0.95rem;
+}
+
+.product__card small {
+  font-size: 0.7rem;
+  color: var(--color-light);
+}
+
+.product__content p {
+  margin: 2rem 0 2.6rem;  
+  color: var(--color-light);
+}
+
+
+/* ===================================  MEDIA QUERIES (MEDIUM DEVICES) =================================== */
+@media screen and (max-width: 1024px) {
+  .products__container {
+      grid-template-columns: 1fr;
+      gap:0
+  }
+
+  .about__me {
+      width: 50% ;
+      margin: 2rem auto 4rem;
+  }
+.product__content p {
+    margin: 1rem 0 1.5rem;
+}
+}
+
+/* ===================================  MEDIA QUERIES (SMALL DEVICES) =================================== */
+@media screen and (max-width: 600px) {
+  .about__me {
+      width: 65%;
+      margin: 0 auto 3rem;
+  }
+
+  .product__cards {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+  }
+
+  .product__content {
+      text-align: center;
+  }
+
+  .product__content p {
+      margin: 1.5rem 0;
+  }
+
+  }
+
+  
