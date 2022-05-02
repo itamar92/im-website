@@ -15,7 +15,7 @@ const Product = ({ product, onAddToCart }) => {
   const classes = useStyles();
 
   const handleAddToCart = () => onAddToCart(product.id, 1);
-console.log(product.productName);
+  console.log(product.productName);
   return (
     <Card className="product__content">
       <CardMedia title={product.productName} />

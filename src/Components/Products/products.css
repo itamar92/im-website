@@ -16,26 +16,13 @@
 }
   
 .products__title {
-
-
   text-align: center;
 }
 
-.about__me {
-  width: 100%;
-  aspect-ratio: 1/1;
-  border-radius: 2rem;
-  background: linear-gradient(45deg, transparent,var(--color-primary), transparent);
-  display: grid;
-  place-items: center;
-}
-
-
 .product__cards {
   display: grid;
-  /* align-items: center;
-  text-align: match-parent; */
   position: relative;
+  left: 5%;
 }
 
 .product__card {
@@ -53,8 +40,6 @@
   cursor: default;
 }
 
-
-
 .product__card h5 {
   font-size: 0.95rem;
 }
@@ -68,6 +53,29 @@
   margin: 2rem 0 2.6rem;  
   color: var(--color-light);
 }
+
+.card-footer{
+  display: flex;
+  justify-content:flex-end;
+  
+  margin: 0rem;
+}
+
+.btn-group{
+  margin: 1rem;
+}
+/* ===================================  PLAYER  =================================== */
+.player-wrapper{
+  position: relative;
+  height: fit-content;
+}
+
+.react-player{
+  width:60px;
+  height:150px;
+}
+
+
 
 
 /* ===================================  MEDIA QUERIES (MEDIUM DEVICES) =================================== */

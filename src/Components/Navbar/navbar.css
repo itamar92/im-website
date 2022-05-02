@@ -16,8 +16,12 @@ nav {
   }
 
   .nav__logo{
-right: 95%;
+right: 85%;
+top: 0%;
 position: absolute;
+width: 12%;
+display: flex;
+height: 100%;
   }
 /*
 nav {
@@ -48,7 +52,7 @@ nav a, ul, button{
 .nav__btn{
     background:transparent ;
     position: absolute;
-    left: 95%;
+    left: 90%;
     padding: 0.9rem;
     border-radius: 50%;
     display: flex;
@@ -57,6 +61,7 @@ nav a, ul, button{
     color: var(--color-light);
     font-size: 1.1rem;
     cursor: pointer;
+    z-index: 10;
 
 }
 
@@ -66,8 +71,8 @@ nav a, ul, button{
 } */
 
 nav a.active, ul.active {
-background: var(--color-bg);
 color: var(--color-white);
+text-decoration: underline;
 }
 
 /* .nav__btn:hover {
@@ -79,7 +84,6 @@ background: var(--color-bg);
 color: var(--color-white);
 }
 
-
 li {
     gap: 0.3rem;
    
@@ -87,6 +91,13 @@ li {
 
 ul {
     justify-content: center;
+}
+
+.cart{
+    right: 10%;
+    position: absolute;
+    bottom:27%;
+
 }
 
 /* ===================================  MEDIA QUERIES (MEDIUM DEVICES) =================================== */

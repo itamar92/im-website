@@ -6,14 +6,16 @@ import Header from "./Components/Header/Header";
 import About from "./Components/About/About";
 import Login from "./Components/Login/Login";
 import Products from "./Components/Products/Products";
+import Products1 from "./Components/Products/Products1";
 import Cart from "./Components/Cart/Cart";
 import LoginForm from "./Components/Login/LoginForm";
-import ProductsList from "./Components/No-Use/ProductsList";
+import ProductsList from "./Components/Products/ProductsList";
 
 function App() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const [cart, setCart] = useState({});
+  const [items, setItems] = useState([]);
 
   const fetchProducts = async () => {
     const data = await fetch("http://localhost:5000/products", {
@@ -26,9 +28,17 @@ function App() {
       setError("No items");
     }
   };
-  const fetchCart = async () => {
-    setCart(await products);
-  };
+  /*const fetchCart = async () => {
+    const data = await fetch("http://localhost:5000/products", {
+      method: "POST",
+    });
+    var body = await data.json();
+    if (body.length > 0) {
+      setCart({ cart: body });
+    } else {
+      setError("No items");
+    }
+  };*/
 
   const handleAddToCart = async (productId, quantity) => {
     const item = await cart.add(productId, quantity);
@@ -36,14 +46,14 @@ function App() {
     setCart(item.cart);
   };
 
-  const handleUpdateCartQty = async (lineItemId, quantity) => {
-    const response = await cart.update(lineItemId, { quantity });
+  const handleUpdateCartQty = async (ItemId, quantity) => {
+    const response = await cart.update(ItemId, { quantity });
 
     setCart(response.cart);
   };
 
-  const handleRemoveFromCart = async (lineItemId) => {
-    const response = await cart.remove(lineItemId);
+  const handleRemoveFromCart = async (ItemId) => {
+    const response = await cart.remove(ItemId);
 
     setCart(response.cart);
   };
@@ -60,15 +70,22 @@ function App() {
     setCart(newCart);
   };
 
+  /*window.localStorage.removeItem("user");*/
+
   useEffect(() => {
-    fetchProducts();
-    fetchCart();
-  }, []);
+    /*fetchProducts();*/
+    localStorage.setItem("products", JSON.stringify(products));
+    /*fetchCart();*/
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      setItems(user);
+    }
+  }, [products]);
 
   return (
     <div>
       <Router>
-        <Navbar />
+        <Navbar items={items} />
         <Switch>
           <Route exact path="/">
             <Header />
@@ -77,7 +94,7 @@ function App() {
             <LoginForm />
           </Route>
           <Route exact path="/products">
-            <ProductsList />
+            <Products1 onAddToCart={handleAddToCart} />
           </Route>
           <Route exact path="/cart">
             <Cart
