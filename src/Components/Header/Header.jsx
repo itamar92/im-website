@@ -8,27 +8,29 @@ const Header = () => {
   return (
     <div>
       <header className="header">
-        <div className="container header__container">
-          <div>
-            <h1 className="header__title">
-              {" "}
-              Get royalty free music for your Videos
-            </h1>
-            <h2 className="text-light">
-              {" "}
-              Original music | High quality | Various Styls
-            </h2>
-          </div>
+        <section id="head">
+          <div className="container header__container">
+            <div>
+              <h1 className="header__title">
+                {" "}
+                Get royalty free music for your Videos
+              </h1>
+              <h2 className="text-light">
+                {" "}
+                Original music | High quality | Various Styls
+              </h2>
+            </div>
 
-          <div className="logo">
-            <img src={LOGO} alt="logo" />
-          </div>
+            <div className="logo">
+              <img src={LOGO} alt="logo" />
+            </div>
 
-          <a href="#contact" className="scroll__down">
-            {" "}
-            Scroll Down
-          </a>
-        </div>
+            <a href="#contact" className="scroll__down">
+              {" "}
+              Scroll Down
+            </a>
+          </div>
+        </section>
       </header>
       <About />
     </div>
@@ -36,9 +38,3 @@ const Header = () => {
 };
 
 export default Header;
-
-{
-  /* <a href="#contact" className="scroll__down">
-Scroll Down
-</a> */
-}

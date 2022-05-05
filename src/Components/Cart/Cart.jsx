@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
@@ -7,9 +7,28 @@ import useStyles from "./cartStyles";
 
 const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
   const classes = useStyles();
-  const itemsPrice = cart.price * cart.quantity;
+  const [price, setPrice] = useState(0);
 
   const handleEmptyCart = () => onEmptyCart();
+  const handleRemoveFromCart = () => {
+    onRemoveFromCart();
+    handlePrice();
+  };
+
+  const handleUpdateCartQty = () => {
+    onUpdateCartQty();
+    handlePrice();
+  };
+
+  const handlePrice = () => {
+    let sum = 0;
+    cart.map((item) => (sum += item.quantity * item.price));
+    setPrice(sum);
+  };
+
+  useEffect(() => {
+    handlePrice();
+  });
 
   const renderEmptyCart = () => (
     <Typography variant="subtitle1">
@@ -30,14 +49,14 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
           <Grid item xs={12} sm={4} key={Item.id}>
             <CartItem
               item={Item}
-              onUpdateCartQty={onUpdateCartQty}
-              onRemoveFromCart={onRemoveFromCart}
+              onUpdateCartQty={handleUpdateCartQty}
+              onRemoveFromCart={handleRemoveFromCart}
             />
           </Grid>
         ))}
       </Grid>
       <div className={classes.cardDetails}>
-        <Typography variant="h4">Subtotal: {itemsPrice}</Typography>
+        <Typography variant="h4">Subtotal: ${price}</Typography>
         <div>
           <Button
             className={classes.emptyButton}

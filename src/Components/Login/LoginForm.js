@@ -23,8 +23,6 @@ function LoginForm({ setIsOpen }) {
   };
 
   const onLogin = async () => {
-    console.log(details.name, details.email, details.password);
-
     var response = await fetch(
       `http://localhost:5000/users?email=${details.email}&password=${details.password}`,
       { method: "GET" }
@@ -32,18 +30,18 @@ function LoginForm({ setIsOpen }) {
 
     var body = await response.json();
     console.log(body);
+    console.log(body.length);
 
     if (body.length === 1) {
-      console.log("Logged in");
-      console.log(body[0].name);
       setDetails({
         name: body[0].name,
         email: body[0].email,
         password: body[0].password,
         isLoggedIn: true,
       });
-      setUser(body[0].name);
+      setUser(body);
       setIsOpen(false);
+      console.log(user);
     } else {
       console.log("Details not match!");
       setError("Details not match!");
@@ -51,8 +49,16 @@ function LoginForm({ setIsOpen }) {
   };
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(details));
-  }, [details]);
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
+
+  if (user) {
+    return <div>{user.name}</div>;
+  }
 
   return (
     <form onSubmit={submitHandler}>

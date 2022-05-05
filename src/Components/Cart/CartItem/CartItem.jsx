@@ -13,36 +13,42 @@ import useStyles from "./cartItemStyles";
 const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
   const classes = useStyles();
 
-  const handleUpdateCartQty = (lineItemId, newQuantity) =>
-    onUpdateCartQty(lineItemId, newQuantity);
-
-  const handleRemoveFromCart = (lineItemId) => onRemoveFromCart(lineItemId);
+  // const handleUpdateCartQty = (Item, quantity) => {
+  //   onUpdateCartQty(Item, quantity);
+  //   console.log(Item);
+  // };
+  // const handleRemoveFromCart = (Item) => {
+  //   console.log("Removed");
+  //   console.log(Item);
+  //   //   setCart(arr);
+  // };
 
   return (
     <Card className="cart-item">
       <CardMedia
-        image={item.image}
+        component="img"
+        image="./Music/Logo_IM icon Black.png"
         alt={item.productName}
         className={classes.media}
       />
       <CardContent className={classes.cardContent}>
         <Typography variant="h4">{item.productName}</Typography>
-        <Typography variant="h5">{item.price}</Typography>
+        <Typography variant="h5">${item.price}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
         <div className={classes.buttons}>
           <Button
             type="button"
             size="small"
-            onClick={() => handleUpdateCartQty(item.id, item.quantity - 1)}
+            onClick={() => onRemoveFromCart(item)}
           >
             -
           </Button>
-          <Typography>&nbsp;{item.quantity}&nbsp;</Typography>
+          <Typography>{item.quantity}</Typography>
           <Button
             type="button"
             size="small"
-            onClick={() => handleUpdateCartQty(item.id, item.quantity + 1)}
+            onClick={() => onUpdateCartQty(item)}
           >
             +
           </Button>
@@ -51,7 +57,7 @@ const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
           variant="contained"
           type="button"
           color="secondary"
-          onClick={() => handleRemoveFromCart(item.id)}
+          onClick={() => onRemoveFromCart(item.id)}
         >
           Remove
         </Button>

@@ -12,7 +12,7 @@ import {
 import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./productStyles";
 
-const Products2 = ({ product, onAddToCart }) => {
+const Product2 = ({ product, onAddToCart, children }) => {
   const classes = useStyles();
 
   return (
@@ -34,28 +34,10 @@ const Products2 = ({ product, onAddToCart }) => {
           <div>$ {product.price}</div>
 
           {/* card body ends here */}
-
-          <div className="card-footer">
-            <div className="">
-              <div className="btn-group">
-                <CardActions disableSpacing className={classes.cardActions}>
-                  <IconButton
-                    aria-label="Add to Cart"
-                    onClick={() => onAddToCart(product.id)}
-                  >
-                    <AddShoppingCart />
-                  </IconButton>
-                </CardActions>
-              </div>
-            </div>
-            {/* float-left ends here */}
-          </div>
-          <div className="float-right">{this.props.children}</div>
         </div>
-        {/* card-footer ends here */}
       </div>
     </div>
   );
 };
 
-export default Products2;
+export default Product2;

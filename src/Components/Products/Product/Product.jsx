@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "@mui/material/styles";
 import {
   Card,
   CardMedia,
@@ -7,34 +8,61 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
+import AudioPlayer from "material-ui-audio-player";
 import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./productStyles";
 import "../products.css";
 
 const Product = ({ product, onAddToCart }) => {
   const classes = useStyles();
+  const theme = useTheme();
 
-  const handleAddToCart = () => onAddToCart(product.id, 1);
-  console.log(product.productName);
+  const handleAddToCart = () => onAddToCart(product);
+
   return (
-    <Card className="product__content">
-      <CardMedia title={product.productName} />
-      <CardContent>
-        <div className="product__card">
+    <Card className={classes.root}>
+      <CardContent className="grid__product">
+        <div className={classes.cardContent}>
           <Typography gutterBottom variant="h5" component="h2">
             {product.productName}
           </Typography>
-          <Typography gutterBottom variant="h5" component="h2">
-            ${product.price}
-          </Typography>
         </div>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <CardMedia
+          className={classes.media}
+          component="img"
+          image="./Music/Logo_IM icon Black.png"
+          title={product.productName}
+        />
+        <Typography
+          gutterBottom
+          variant="body2"
+          color="textSecondary"
+          component="p"
+        >
           {" "}
-          {product.description}
+          {"\n" + product.description}
         </Typography>
+        <AudioPlayer
+          elevation={0}
+          width="100%"
+          variation="primary"
+          download={false}
+          loop={false}
+          spacing={2}
+          debug={false}
+          src={product.src}
+        />
       </CardContent>
       <CardActions disableSpacing className={classes.cardActions}>
-        <IconButton aria-label="Add to Cart" onClick={handleAddToCart}>
+        <Typography variant="h5" component="h2">
+          ${product.price}
+        </Typography>
+        <IconButton
+          aria-label="Add to Cart"
+          onClick={() => {
+            handleAddToCart(product);
+          }}
+        >
           <AddShoppingCart />
         </IconButton>
       </CardActions>
@@ -43,3 +71,46 @@ const Product = ({ product, onAddToCart }) => {
 };
 
 export default Product;
+
+{
+  {
+    /* <SoundCloudPlayer
+            className="react-player"
+            url={product.url}
+            controls={true}
+            width="100%"
+            height="200px"
+          /> */
+  }
+
+  /* <Card className={classes.root} sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <CardContent className={classes.cardContent} sx={{ flex: "1 0 auto" }}>
+          <Typography component="div" variant="h5">
+            {product.productName}
+          </Typography>
+          <Typography variant="subtitle1" color="textSecondary" component="div">
+            {product.composer}
+          </Typography>
+        </CardContent>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            component="img"
+            image="./Music/Logo_IM icon Black.png"
+            alt="Logo"
+          />
+          <AudioPlayer
+            elevation={1}
+            width="500px"
+            variation="primary"
+            download={false}
+            loop={false}
+            spacing={2}
+            debug={false}
+            src={product.src}
+          />
+        </CardActionArea>
+      </Box>
+    </Card> */
+}

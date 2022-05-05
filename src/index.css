@@ -12,7 +12,7 @@
 
 :root{
   --color-bg: #1f1f38;
-  --color-bg-variant: #2c2c6c;
+  --color-bg-variant: rgb(44, 44, 108);
   --color-primary: #4db5ff;
   --color-primary-variant: rgba(77,181,255,0.4);
   --color-white: #fff;
@@ -23,6 +23,7 @@
   --container-width-lg: 75%;
   --container-width-md: 86%;
   --container-width-sm: 90%;
+  height: 100hv !important;
 }
 
 html{
@@ -39,6 +40,7 @@ body {
   color: var(--color-white);
   line-height:1.7 ;
   background-image:url(../src/Image/bg-texture.png) ;
+  height: 100%;
 }
 
 
@@ -47,6 +49,7 @@ body {
 .container {
   width: var(--container-width-lg);
   margin: 0 auto;
+  height: 100% !important;
 }
 
 h1,

@@ -14,16 +14,17 @@ import ProductsList from "./Components/Products/ProductsList";
 function App() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
-  const [cart, setCart] = useState({});
-  const [items, setItems] = useState([]);
+  const [cart, setCart] = useState([]);
+  const [userName, setUser] = useState([]);
 
   const fetchProducts = async () => {
     const data = await fetch("http://localhost:5000/products", {
       method: "GET",
     });
     var body = await data.json();
-    if (body.length > 0) {
-      setProducts({ products: body });
+
+    if (body.products.length > 0) {
+      setProducts(body.products);
     } else {
       setError("No items");
     }
@@ -40,28 +41,53 @@ function App() {
     }
   };*/
 
-  const handleAddToCart = async (productId, quantity) => {
-    const item = await cart.add(productId, quantity);
+  const handleAddToCart = (product) => {
+    const exist = cart.find((x) => x.id === product.id);
+    if (exist) {
+      setCart(
+        cart.map((x) => (x.id === product.id ? { ...exist, quantity: 1 } : x))
+      );
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+    console.log(product.id);
+    console.log(cart);
+    console.log(exist.quantity);
+  };
+  // const handleAddToCart = (item) => {
+  //   if (cart.indexOf(item) >= -1) return setCart([...cart, item]);
+  // };
 
-    setCart(item.cart);
+  const handleUpdateCartQty = (item, quantity) => {
+    console.log(item);
+    const itemId = cart[item.id];
+
+    cart[itemId].quantity += quantity;
+
+    if (cart[itemId].quantity === 0) cart[itemId].quantity = 1;
+    setCart([...cart]);
   };
 
-  const handleUpdateCartQty = async (ItemId, quantity) => {
-    const response = await cart.update(ItemId, { quantity });
-
-    setCart(response.cart);
+  const handleRemoveFromCart = (product) => {
+    const exist = cart.find((x) => x.id === product.id);
+    if (exist.quantity === 1) {
+      setCart(cart.filter((x) => x.id !== product.id));
+    } else {
+      setCart(
+        cart.map((x) =>
+          x.id === product.id ? { ...exist, quantity: exist.quantity - 1 } : x
+        )
+      );
+    }
   };
 
-  const handleRemoveFromCart = async (ItemId) => {
-    const response = await cart.remove(ItemId);
-
-    setCart(response.cart);
-  };
+  // const handleRemoveFromCart = (id) => {
+  //   const arr = cart.filter((item) => item.id !== id);
+  //   setCart(arr);
+  // };
 
   const handleEmptyCart = async () => {
-    const response = await cart.empty();
-
-    setCart(response.cart);
+    setCart([]);
   };
 
   const refreshCart = async () => {
@@ -73,19 +99,19 @@ function App() {
   /*window.localStorage.removeItem("user");*/
 
   useEffect(() => {
-    /*fetchProducts();*/
-    localStorage.setItem("products", JSON.stringify(products));
-    /*fetchCart();*/
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      setItems(user);
-    }
-  }, [products]);
+    fetchProducts();
+    // localStorage.setItem("products", JSON.stringify(products));
+    // /*fetchCart();*/
+    // const user = JSON.parse(localStorage.getItem("user"));
+    // if (user) {
+    //   setUser(user);
+    // }
+  }, []);
 
   return (
     <div>
       <Router>
-        <Navbar items={items} />
+        <Navbar totalItems={cart.length} user={userName} />
         <Switch>
           <Route exact path="/">
             <Header />
@@ -94,12 +120,16 @@ function App() {
             <LoginForm />
           </Route>
           <Route exact path="/products">
-            <Products1 onAddToCart={handleAddToCart} />
+            <Products1
+              products={products}
+              onAddToCart={handleAddToCart}
+              handleUpdateCartQty
+            />
           </Route>
           <Route exact path="/cart">
             <Cart
               cart={cart}
-              onUpdateCartQty={handleUpdateCartQty}
+              onUpdateCartQty={handleAddToCart}
               onRemoveFromCart={handleRemoveFromCart}
               onEmptyCart={handleEmptyCart}
             />

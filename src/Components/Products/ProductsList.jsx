@@ -6,18 +6,14 @@ import "./products.css";
 export default class ProductsList extends Component {
   //Executes when the component is mounted
   constructor(props) {
-    //console.log("constructor - ProductsList");
-    super(props); //calling super class's constructor
+    super(props);
 
-    //initialization of the state
     this.state = {
       products: [],
     };
   }
 
   render() {
-    //console.log("render - ProductsList");
-
     return (
       <div className="container">
         <div className="container products__container">
@@ -41,35 +37,23 @@ export default class ProductsList extends Component {
   }
   // render ends here
 
-  //Executes after constructor and render method (includes life cycle of child components, if any) of current component
   componentDidMount = async () => {
-    //send request to server
     var response = await fetch("http://localhost:5000/products", {
       method: "GET",
     });
 
-    //the following code executes after receiving response from server
-    //converting the response body into a JS object array
     var prods = await response.json();
 
-    //the following code executes after converting response body into JS object array
     console.log(prods);
 
-    //updating products into component's state
     this.setState({ products: prods });
   };
 
   componentDidUpdate(prevProps, prevState) {}
 
-  //Executes when the current instance of current component is being deleted from memory
-  componentWillUnmount() {
-    //console.log("componentWillUnmount - ProductsList");
-  }
+  componentWillUnmount() {}
 
   componentDidCatch(error, info) {
-    //console.log("componentDidCatch - ProductsList");
-    //console.log(error, info);
-
     localStorage.lastError = `${error}\n${JSON.stringify(info)}`;
   }
 

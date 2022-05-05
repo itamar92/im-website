@@ -1,24 +1,16 @@
 import { Link, useLocation } from "react-router-dom";
 import "./navbar.css";
 import { useState } from "react";
-import Login from "../Login/Login";
 import Portalpage from "../Login/Portalpage";
 import LoginForm from "../Login/LoginForm";
 import LOGO from "../../Image/Logo_IM icon.png";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Badge,
-  MenuItem,
-  Menu,
-  Typography,
-} from "@material-ui/core";
+import { IconButton, Badge } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import useStyles from "./navbarStyles";
 import LoginControl from "../Login/LoginControl";
+import { HashLink } from "react-router-hash-link";
 
-const Navbar = ({ totalItems, items }) => {
+const Navbar = ({ totalItems, user }) => {
   const [activeNav, setActiveNav] = useState("/");
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
@@ -26,23 +18,25 @@ const Navbar = ({ totalItems, items }) => {
   return (
     <nav>
       <ul>
-        <Link to="/">
+        <HashLink to="/#head">
           <img src={LOGO} alt="logo" className="nav__logo" />{" "}
-        </Link>
-        <Link
+        </HashLink>
+        <HashLink
           onClick={() => setActiveNav("")}
           className={activeNav === "" ? "active" : "/"}
-          to="/"
+          to="/#head"
         >
           <li> Home</li>
-        </Link>
-        <a
-          href="#about"
+        </HashLink>
+
+        <HashLink
+          to="/#about"
           onClick={() => setActiveNav("#about")}
           className={activeNav === "#about" ? "active" : ""}
         >
           About
-        </a>
+        </HashLink>
+
         <Link
           onClick={() => setActiveNav("/products")}
           className={activeNav === "/products" ? "active" : ""}
@@ -58,7 +52,7 @@ const Navbar = ({ totalItems, items }) => {
           Contact
         </a>
         <button className="nav__btn" onClick={() => setIsOpen(true)}>
-          <LoginControl userName={items.name} />
+          <LoginControl userName={user.name} />
         </button>
         <Portalpage open={isOpen} onClose={() => setIsOpen(false)}>
           {<LoginForm setIsOpen={setIsOpen} />}
