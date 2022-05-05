@@ -7,6 +7,7 @@ import Products1 from "./Components/Products/Products1";
 import Cart from "./Components/Cart/Cart";
 import LoginForm from "./Components/Login/LoginForm";
 import ProductProvider from "./Components/Products/Context/ProductsContext";
+import NotFound from "./Components/NotFound";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -14,18 +15,18 @@ function App() {
   const [cart, setCart] = useState([]);
   const [userName, setUser] = useState([]);
 
-  const fetchProducts = async () => {
-    const data = await fetch("http://localhost:5000/products", {
-      method: "GET",
-    });
-    var body = await data.json();
+  // const fetchProducts = async () => {
+  //   const data = await fetch("http://localhost:5000/products", {
+  //     method: "GET",
+  //   });
+  //   var body = await data.json();
 
-    if (body.products.length > 0) {
-      setProducts(body.products);
-    } else {
-      setError("No items");
-    }
-  };
+  //   if (body.products.length > 0) {
+  //     setProducts(body.products);
+  //   } else {
+  //     setError("No items");
+  //   }
+  // };
   /*const fetchCart = async () => {
     const data = await fetch("http://localhost:5000/products", {
       method: "POST",
@@ -96,7 +97,7 @@ function App() {
   /*window.localStorage.removeItem("user");*/
 
   useEffect(() => {
-    fetchProducts();
+    // fetchProducts();
     // localStorage.setItem("products", JSON.stringify(products));
     // /*fetchCart();*/
     // const user = JSON.parse(localStorage.getItem("user"));
@@ -107,37 +108,33 @@ function App() {
 
   return (
     <div>
-      <Router>
-        <Navbar totalItems={cart.length} user={userName} />
-        <Switch>
-          <Route exact path="/">
-            <Header />
-          </Route>
-          <Route exact path="/login">
-            <LoginForm />
-          </Route>
-          <ProductProvider>
+      <ProductProvider>
+        <Router>
+          <Navbar user={userName} />
+          <Switch>
+            <Route exact path="/">
+              <Header />
+            </Route>
+            <Route exact path="/login">
+              <LoginForm />
+            </Route>
+
             <Route exact path="/products">
-              <Products1
-                products={products}
-                onAddToCart={handleAddToCart}
-                handleUpdateCartQty
-              />
+              <Products1 />
             </Route>
             <Route exact path="/cart">
-              <Cart
-                cart={cart}
-                onUpdateCartQty={handleAddToCart}
-                onRemoveFromCart={handleRemoveFromCart}
-                onEmptyCart={handleEmptyCart}
-              />
+              <Cart />
             </Route>
-          </ProductProvider>
-          <Route exact path="/about">
-            <About />
-          </Route>
-        </Switch>
-      </Router>
+
+            <Route exact path="/about">
+              <About />
+            </Route>
+            <Route path="/*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </Router>
+      </ProductProvider>
     </div>
   );
 }

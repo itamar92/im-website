@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import "./navbar.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Portalpage from "../Login/Portalpage";
 import LoginForm from "../Login/LoginForm";
 import LOGO from "../../Image/Logo_IM icon.png";
@@ -9,12 +9,16 @@ import { ShoppingCart } from "@material-ui/icons";
 import useStyles from "./navbarStyles";
 import LoginControl from "../Login/LoginControl";
 import { HashLink } from "react-router-hash-link";
+import { ProductsContext } from "../Products/Context/ProductsContext";
 
-const Navbar = ({ totalItems, user }) => {
+const Navbar = ({ user }) => {
+  const { cart } = useContext(ProductsContext);
   const [activeNav, setActiveNav] = useState("/");
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
   const location = useLocation();
+
+  let totalItems = cart.length;
   return (
     <nav>
       <ul>

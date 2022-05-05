@@ -17,7 +17,7 @@ const Product = ({ product, onAddToCart }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const handleAddToCart = () => onAddToCart(product);
+  // const handleAddToCart = () => onAddToCart(product);
 
   return (
     <Card className={classes.root}>
@@ -60,7 +60,7 @@ const Product = ({ product, onAddToCart }) => {
         <IconButton
           aria-label="Add to Cart"
           onClick={() => {
-            handleAddToCart(product);
+            onAddToCart(product);
           }}
         >
           <AddShoppingCart />

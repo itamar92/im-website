@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
 import CartItem from "./CartItem/CartItem";
 import useStyles from "./cartStyles";
+import { ProductsContext } from "../Products/Context/ProductsContext";
 
-const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
+const Cart = () => {
   const classes = useStyles();
+  const { cart } = useContext(ProductsContext);
+  const { handleAddToCart } = useContext(ProductsContext);
+  const { handleRemoveFromCart } = useContext(ProductsContext);
+  const { handleEmptyCart } = useContext(ProductsContext);
+  const { handleUpdateCartQty } = useContext(ProductsContext);
+
   const [price, setPrice] = useState(0);
 
-  const handleEmptyCart = () => onEmptyCart();
-  const handleRemoveFromCart = () => {
-    onRemoveFromCart();
+  // const handleEmptyCart = () => onEmptyCart();
+  const onRemoveFromCart = () => {
+    handleRemoveFromCart();
     handlePrice();
   };
 
-  const handleUpdateCartQty = () => {
-    onUpdateCartQty();
+  const onUpdateCartQty = () => {
+    handleUpdateCartQty();
     handlePrice();
   };
 
@@ -49,8 +55,8 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
           <Grid item xs={12} sm={4} key={Item.id}>
             <CartItem
               item={Item}
-              onUpdateCartQty={handleUpdateCartQty}
-              onRemoveFromCart={handleRemoveFromCart}
+              onUpdateCartQty={onUpdateCartQty}
+              onRemoveFromCart={onRemoveFromCart}
             />
           </Grid>
         ))}

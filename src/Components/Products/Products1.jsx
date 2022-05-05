@@ -3,9 +3,12 @@ import Grid from "@material-ui/core/Grid";
 import "./products.css";
 import Product from "./Product/Product";
 import { ProductsContext } from "./Context/ProductsContext";
-const Products1 = ({ onAddToCart }) => {
-  // const { data, error, isPending } = useFetch("http://localhost:5000/products");
+
+const Products1 = () => {
   const { products } = useContext(ProductsContext);
+  const { handleAddToCart } = useContext(ProductsContext);
+  // const { data, error, isPending } = useFetch("http://localhost:5000/products");
+
   // const [error, setError] = useState("");
 
   // const fetchProducts = async () => {
@@ -46,7 +49,7 @@ const Products1 = ({ onAddToCart }) => {
               item
               xs="auto"
             >
-              <Product product={product} onAddToCart={onAddToCart} />
+              <Product product={product} onAddToCart={handleAddToCart} />
             </Grid>
           ))}
       </div>
