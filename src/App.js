@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Components/Navbar/Navbar";
-import PrimarySearchAppBar from "./Components/Navbar/Navebar1";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Components/Header/Header";
 import About from "./Components/About/About";
-import Login from "./Components/Login/Login";
-import Products from "./Components/Products/Products";
 import Products1 from "./Components/Products/Products1";
 import Cart from "./Components/Cart/Cart";
 import LoginForm from "./Components/Login/LoginForm";
-import ProductsList from "./Components/Products/ProductsList";
+import ProductProvider from "./Components/Products/Context/ProductsContext";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -45,12 +42,12 @@ function App() {
     const exist = cart.find((x) => x.id === product.id);
     if (exist) {
       setCart(
-        cart.map((x) => (x.id === product.id ? { ...exist, quantity: 1 } : x))
+        cart.map((x) => (x.id === product.id ? [...exist, { quantity: 1 }] : x))
       );
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
-    console.log(product.id);
+    console.log(exist.id);
     console.log(cart);
     console.log(exist.quantity);
   };
@@ -75,7 +72,7 @@ function App() {
     } else {
       setCart(
         cart.map((x) =>
-          x.id === product.id ? { ...exist, quantity: exist.quantity - 1 } : x
+          x.id === product.id ? [...exist, { quantity: exist.quantity - 1 }] : x
         )
       );
     }
@@ -119,21 +116,23 @@ function App() {
           <Route exact path="/login">
             <LoginForm />
           </Route>
-          <Route exact path="/products">
-            <Products1
-              products={products}
-              onAddToCart={handleAddToCart}
-              handleUpdateCartQty
-            />
-          </Route>
-          <Route exact path="/cart">
-            <Cart
-              cart={cart}
-              onUpdateCartQty={handleAddToCart}
-              onRemoveFromCart={handleRemoveFromCart}
-              onEmptyCart={handleEmptyCart}
-            />
-          </Route>
+          <ProductProvider>
+            <Route exact path="/products">
+              <Products1
+                products={products}
+                onAddToCart={handleAddToCart}
+                handleUpdateCartQty
+              />
+            </Route>
+            <Route exact path="/cart">
+              <Cart
+                cart={cart}
+                onUpdateCartQty={handleAddToCart}
+                onRemoveFromCart={handleRemoveFromCart}
+                onEmptyCart={handleEmptyCart}
+              />
+            </Route>
+          </ProductProvider>
           <Route exact path="/about">
             <About />
           </Route>

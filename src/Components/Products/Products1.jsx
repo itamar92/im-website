@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
-import ProductCopy from "./Product/Product copy";
-import Product2 from "./Product/Product2";
+import React, { useEffect, useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-import useFetch from "../usefetch";
 import "./products.css";
 import Product from "./Product/Product";
-
-const Products1 = ({ products, onAddToCart }) => {
+import { ProductsContext } from "./Context/ProductsContext";
+const Products1 = ({ onAddToCart }) => {
   // const { data, error, isPending } = useFetch("http://localhost:5000/products");
-  // const [products, setProducts] = useState([]);
+  const { products } = useContext(ProductsContext);
   // const [error, setError] = useState("");
 
   // const fetchProducts = async () => {
@@ -24,7 +21,7 @@ const Products1 = ({ products, onAddToCart }) => {
   //   }
   // };
 
-  localStorage.setItem("products", JSON.stringify(products));
+  // localStorage.setItem("products", JSON.stringify(products));
 
   // useEffect(() => {
   //   fetchProducts();
