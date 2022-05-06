@@ -12,13 +12,13 @@ import { HashLink } from "react-router-hash-link";
 import { ProductsContext } from "../Products/Context/ProductsContext";
 
 const Navbar = ({ user }) => {
-  const { cart } = useContext(ProductsContext);
+  const { totalCart } = useContext(ProductsContext);
   const [activeNav, setActiveNav] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
   const location = useLocation();
 
-  let totalItems = cart.length;
+  let totalItems = totalCart;
   return (
     <nav>
       <ul>

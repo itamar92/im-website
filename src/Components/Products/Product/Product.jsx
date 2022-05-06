@@ -41,7 +41,7 @@ const Product = ({ product, onAddToCart }) => {
           />
           <Typography
             gutterBottom
-            variant="body3"
+            variant="body1"
             color="textSecondary"
             component="p"
           >

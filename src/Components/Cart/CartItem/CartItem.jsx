@@ -40,7 +40,7 @@ const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
           <Button
             type="button"
             size="small"
-            onClick={() => onRemoveFromCart(item.id)}
+            onClick={() => onUpdateCartQty(item, -1)}
           >
             -
           </Button>

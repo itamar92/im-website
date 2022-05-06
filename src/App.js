@@ -7,6 +7,7 @@ import Products from "./Components/Products/Products";
 import Cart from "./Components/Cart/Cart";
 import LoginForm from "./Components/Login/LoginForm";
 import ProductProvider from "./Components/Products/Context/ProductsContext";
+import UserProvider from "./Components/Login/UserContext";
 import NotFound from "./Components/NotFound";
 import Checkout from "./Components/CheckoutForm/Checkout/Checkout";
 import Footer from "./Components/Footer";
@@ -117,10 +118,11 @@ function App() {
             <Route exact path="/">
               <Header />
             </Route>
-            <Route exact path="/login">
-              <LoginForm />
-            </Route>
-
+            <UserProvider>
+              <Route exact path="/login">
+                <LoginForm />
+              </Route>
+            </UserProvider>
             <Route path="/products">
               <Products />
             </Route>

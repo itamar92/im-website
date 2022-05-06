@@ -6,6 +6,7 @@ function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const [cart, setCart] = useState([]);
+  const [totalCart, setTotalCart] = useState();
   const [price, setPrice] = useState(0);
 
   // fetching products from data
@@ -24,13 +25,22 @@ function ProductProvider({ children }) {
 
   //#region Cart Actions
   const handleAddToCart = (product) => {
-    let tempCart = [...cart];
-    let tempProducts = [...products];
-    let tempItem = tempCart.find((item) => item.id === product.id);
-    if (!tempItem) {
-      tempItem = tempProducts.find((item) => item.id === product.id);
-      setCart([...cart, { ...tempItem, quantity: 1 }]);
+    let index = cart.findIndex((x) => x.id === product.id);
+    console.log(index);
+    if (index === -1) {
+      setCart([...cart, { ...product, quantity: 1 }]);
       handlePrice();
+      handleTotalCart(1);
+      console.log(product);
+    } else {
+      setCart(
+        cart.map((x) =>
+          x.id === product.id ? { ...product, quantity: (x.quantity += 1) } : x
+        )
+      );
+      handlePrice();
+      handleTotalCart();
+      console.log(product.quantity);
     }
   };
 
@@ -43,52 +53,31 @@ function ProductProvider({ children }) {
       setCart(
         cart.map((x) =>
           x.id === product.id
-            ? { ...product, quantity: (x.quantity += quantity) }
+            ? { ...product, quantity: (product.quantity += quantity) }
             : x
         )
       );
+      handlePrice();
+      handleTotalCart();
+      console.log(exist.quantity);
+      if (exist.quantity === 0) {
+        handleRemoveFromCart(product.id);
+      }
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
 
-  // const handleUpdateCartQty = (product, quantity) => {
-  //   const arr = cart;
-  //   let tempCart = [...cart];
-  //   let tempProducts = [...products];
-  //   let tempItem = cart.find((item) => item.id === product.id);
-  //   console.log("tempItem:");
-  //   console.log(tempItem.id);
-  //   console.log(product);
-  //   if (!tempItem) {
-  //     tempItem = products.find((item) => item.id === product.id);
-  //     setCart([...cart, { ...tempItem, quantity: quantity }]);
-  //     handlePrice();
-  //   } else {
-  //     setCart([...product, { quantity: (product.quantity += quantity) }]);
-  //   }
-  // };
-
   const handleRemoveFromCart = (id) => {
     const arr = cart.filter((item) => item.id !== id);
     setCart(arr);
     handlePrice();
+    handleTotalCart();
   };
-  // const handleRemoveFromCart = (product) => {
-  //   const exist = cart.find((x) => x.id === product.id);
-  //   if (exist.quantity === 1) {
-  //     setCart(cart.filter((x) => x.id !== product.id));
-  //   } else {
-  //     setCart(
-  //       cart.map((x) =>
-  //         x.id === product.id ? [...exist, { quantity: exist.quantity - 1 }] : x
-  //       )
-  //     );
-  //   }
-  // };
 
   const handleEmptyCart = () => {
     setCart([]);
+    handleTotalCart();
   };
 
   const handlePrice = () => {
@@ -96,6 +85,16 @@ function ProductProvider({ children }) {
     cart.map((item) => (sum += item.quantity * item.price));
     setPrice(sum);
   };
+  const handleTotalCart = (num) => {
+    let sum = 0;
+    const total = cart.map((item) => (sum += item.quantity));
+    {
+      total === 0 ? (sum = num) : (sum = sum);
+    }
+    setTotalCart(sum);
+    console.log(sum);
+  };
+
   //#endregion
 
   localStorage.setItem("products", JSON.stringify(products));
@@ -103,6 +102,7 @@ function ProductProvider({ children }) {
   useEffect(() => {
     fetchProducts();
     handlePrice();
+    handleTotalCart();
   }, []);
 
   return (
@@ -111,6 +111,7 @@ function ProductProvider({ children }) {
         products,
         cart,
         price,
+        totalCart,
         error,
         handleAddToCart,
         handleUpdateCartQty,

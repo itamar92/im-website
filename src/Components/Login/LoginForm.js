@@ -39,7 +39,7 @@ function LoginForm({ setIsOpen }) {
         password: body[0].password,
         isLoggedIn: true,
       });
-      setUser(body);
+      setUser(body[0].name);
       setIsOpen(false);
       console.log(user);
     } else {
