@@ -5,6 +5,12 @@ export default makeStyles((theme) => ({
   title: {
     marginTop: "5%",
   },
+
+  cartContainer: {
+    paddingTop: "2rem",
+    paddingBottom: "2rem",
+  },
+
   emptyButton: {
     minWidth: "150px",
     [theme.breakpoints.down("xs")]: {
@@ -25,5 +31,6 @@ export default makeStyles((theme) => ({
     marginTop: "10%",
     width: "100%",
     justifyContent: "space-between",
+    paddingBottom: "2rem",
   },
 }));

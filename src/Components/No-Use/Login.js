@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import LoginForm from "./LoginForm";
+import LoginForm from "../Login/LoginForm";
 import "./login.css";
 import { Link, useHistory } from "react-router-dom";
 

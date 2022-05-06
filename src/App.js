@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navbar from "./Components/Navbar/Navbar";
 import Header from "./Components/Header/Header";
 import About from "./Components/About/About";
-import Products1 from "./Components/Products/Products1";
+import Products from "./Components/Products/Products";
 import Cart from "./Components/Cart/Cart";
 import LoginForm from "./Components/Login/LoginForm";
 import ProductProvider from "./Components/Products/Context/ProductsContext";
 import NotFound from "./Components/NotFound";
+import Checkout from "./Components/CheckoutForm/Checkout/Checkout";
+import Footer from "./Components/Footer";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState("");
+  // const [products, setProducts] = useState([]);
+  // const [error, setError] = useState("");
   const [cart, setCart] = useState([]);
   const [userName, setUser] = useState([]);
 
@@ -119,11 +121,14 @@ function App() {
               <LoginForm />
             </Route>
 
-            <Route exact path="/products">
-              <Products1 />
+            <Route path="/products">
+              <Products />
             </Route>
             <Route exact path="/cart">
               <Cart />
+            </Route>
+            <Route exact path="/checkout">
+              <Checkout />
             </Route>
 
             <Route exact path="/about">
@@ -135,6 +140,7 @@ function App() {
           </Switch>
         </Router>
       </ProductProvider>
+      <Footer />
     </div>
   );
 }

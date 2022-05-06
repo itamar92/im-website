@@ -5,6 +5,7 @@ import {
   CardMedia,
   CardContent,
   CardActions,
+  Box,
   Typography,
   IconButton,
 } from "@material-ui/core";
@@ -20,53 +21,59 @@ const Product = ({ product, onAddToCart }) => {
   // const handleAddToCart = () => onAddToCart(product);
 
   return (
-    <Card className={classes.root}>
-      <CardContent className="grid__product">
-        <div className={classes.cardContent}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {product.productName}
+    <Box
+      sx={{ display: "flex", flexDirection: "column" }}
+      paddingBottom={"2px"}
+      width={"50%"}
+    >
+      <Card className={classes.root}>
+        <CardContent className="grid__product">
+          <div className={classes.cardContent}>
+            <Typography gutterBottom variant="h5" component="h2">
+              {product.productName}
+            </Typography>
+          </div>
+          <CardMedia
+            className={classes.media}
+            component="img"
+            image="./Music/Logo_IM icon Black.png"
+            title={product.productName}
+          />
+          <Typography
+            gutterBottom
+            variant="body3"
+            color="textSecondary"
+            component="p"
+          >
+            {" "}
+            {"\n" + product.description}
           </Typography>
-        </div>
-        <CardMedia
-          className={classes.media}
-          component="img"
-          image="./Music/Logo_IM icon Black.png"
-          title={product.productName}
-        />
-        <Typography
-          gutterBottom
-          variant="body2"
-          color="textSecondary"
-          component="p"
-        >
-          {" "}
-          {"\n" + product.description}
-        </Typography>
-        <AudioPlayer
-          elevation={0}
-          width="100%"
-          variation="primary"
-          download={false}
-          loop={false}
-          spacing={2}
-          debug={false}
-          src={product.src}
-        />
-      </CardContent>
-      <CardActions disableSpacing className={classes.cardActions}>
-        <Typography variant="h5" component="h2">
-          ${product.price}
-        </Typography>
-        <IconButton
-          aria-label="Add to Cart"
-          onClick={() => {
-            onAddToCart(product);
-          }}
-        >
-          <AddShoppingCart />
-        </IconButton>
-      </CardActions>
-    </Card>
+          <AudioPlayer
+            elevation={0}
+            width="100%"
+            variation="primary"
+            download={false}
+            loop={false}
+            spacing={2}
+            debug={false}
+            src={product.src}
+          />
+        </CardContent>
+        <CardActions disableSpacing className={classes.cardActions}>
+          <Typography variant="h5" component="h2">
+            ${product.price}
+          </Typography>
+          <IconButton
+            aria-label="Add to Cart"
+            onClick={() => {
+              onAddToCart(product);
+            }}
+          >
+            <AddShoppingCart />
+          </IconButton>
+        </CardActions>
+      </Card>
+    </Box>
   );
 };
 

@@ -6,13 +6,16 @@ import { IoLogoFacebook } from "react-icons/io";
 const HeaderSocial = () => {
   return (
     <div className="header__socials">
-      <a href="http://linkedin.com" target="_blank">
+      <a
+        href="https://www.linkedin.com/in/itamar-miron-848753125"
+        target="_blank"
+      >
         <BsLinkedin />
       </a>
-      <a href="http://github.com" target="_blank">
+      <a href="https://github.com/itamar92" target="_blank">
         <FaGithub />
       </a>
-      <a href="http://facebooke.com" target="_blank">
+      <a href="https://www.facebook.com/imusicproductions" target="_blank">
         <IoLogoFacebook />
       </a>
     </div>

@@ -12,38 +12,41 @@ const Cart = () => {
   const { handleRemoveFromCart } = useContext(ProductsContext);
   const { handleEmptyCart } = useContext(ProductsContext);
   const { handleUpdateCartQty } = useContext(ProductsContext);
+  const { price } = useContext(ProductsContext);
 
-  const [price, setPrice] = useState(0);
+  // const [price, setPrice] = useState(0);
 
-  // const handleEmptyCart = () => onEmptyCart();
-  const onRemoveFromCart = () => {
-    handleRemoveFromCart();
-    handlePrice();
-  };
+  // // const handleEmptyCart = () => onEmptyCart();
+  // const onRemoveFromCart = () => {
+  //   handleRemoveFromCart();
+  //   handlePrice();
+  // };
 
-  const onUpdateCartQty = () => {
-    handleUpdateCartQty();
-    handlePrice();
-  };
+  // const onUpdateCartQty = () => {
+  //   handleUpdateCartQty();
+  //   handlePrice();
+  // };
 
-  const handlePrice = () => {
-    let sum = 0;
-    cart.map((item) => (sum += item.quantity * item.price));
-    setPrice(sum);
-  };
+  // const handlePrice = () => {
+  //   let sum = 0;
+  //   cart.map((item) => (sum += item.quantity * item.price));
+  //   setPrice(sum);
+  // };
 
-  useEffect(() => {
-    handlePrice();
-  });
+  // useEffect(() => {
+  //   handlePrice();
+  // });
 
   const renderEmptyCart = () => (
-    <Typography variant="subtitle1">
-      You have no items in your shopping cart,
-      <Link className={classes.link} to="/products">
-        start adding some
-      </Link>
-      !
-    </Typography>
+    <div className={classes.cartContainer}>
+      <Typography variant="subtitle1">
+        You have no items in your shopping cart,
+        <Link className={classes.link} to="/products">
+          start adding some
+        </Link>
+        !
+      </Typography>
+    </div>
   );
 
   if (!cart) return "Loading";
@@ -55,8 +58,8 @@ const Cart = () => {
           <Grid item xs={12} sm={4} key={Item.id}>
             <CartItem
               item={Item}
-              onUpdateCartQty={onUpdateCartQty}
-              onRemoveFromCart={onRemoveFromCart}
+              onUpdateCartQty={handleUpdateCartQty}
+              onRemoveFromCart={handleRemoveFromCart}
             />
           </Grid>
         ))}

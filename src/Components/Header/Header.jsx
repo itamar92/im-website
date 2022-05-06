@@ -7,8 +7,8 @@ import About from "../About/About";
 const Header = () => {
   return (
     <div>
-      <header className="header">
-        <section id="head">
+      <section id="head">
+        <header className="header">
           <div className="container header__container">
             <div>
               <h1 className="header__title">
@@ -25,13 +25,15 @@ const Header = () => {
               <img src={LOGO} alt="logo" />
             </div>
 
-            <a href="#contact" className="scroll__down">
+            {/* <a href="#contact" className="scroll__down">
               {" "}
               Scroll Down
-            </a>
+            </a> */}
+            <HeaderSocial />
           </div>
-        </section>
-      </header>
+        </header>
+      </section>
+
       <About />
     </div>
   );

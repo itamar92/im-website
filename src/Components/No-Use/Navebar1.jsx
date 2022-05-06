@@ -13,7 +13,7 @@ import { Link, useLocation } from "react-router-dom";
 import LOGO from "../../Image/Logo_IM_1.png";
 import Login from "../Login/Login";
 import Portalpage from "../Login/Portalpage";
-import useStyles from "./navbarStyles";
+import useStyles from "../Navbar/navbarStyles";
 import "./navbar.css";
 
 const PrimarySearchAppBar = ({ totalItems }) => {

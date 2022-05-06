@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "../products.css";
 import bootstrap from "bootstrap";
 import SoundCloud from "react-player/soundcloud";
-import Waveform from "../Waveform";
+import Waveform from "./Waveform";
 import {
   Card,
   CardMedia,

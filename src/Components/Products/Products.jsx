@@ -1,56 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Grid from "@material-ui/core/Grid";
-import Product from "./Product/Product";
-import useStyles from "./productsStyles";
-import useFetch from "../usefetch";
-import { useParams } from "react-router-dom";
 import "./products.css";
+import Product from "./Product/Product";
+import { ProductsContext } from "./Context/ProductsContext";
 
-const Products = ({ onAddToCart }) => {
-  const classes = useStyles();
-  const { id } = useParams();
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState("");
-  const fetchProducts = async () => {
-    const data = await fetch("data/Products-db.json", {
-      method: "GET",
-    });
-    var body = await data.json();
-    if (body.length > 0) {
-      setProducts({ products: body });
-    } else {
-      setError("No items");
-    }
-  };
-  // const { products, error, isPending } = useFetch(
-  //   "http://localhost:5000/products"
-  // );
-  console.log("---");
-  console.log(products);
-  console.log(products.length);
-  console.log(error);
-  // console.log(isPending);
-  console.log("---");
+const Products = () => {
+  const { products } = useContext(ProductsContext);
+  const { handleAddToCart } = useContext(ProductsContext);
+  // const { data, error, isPending } = useFetch("http://localhost:5000/products");
+
+  // const [error, setError] = useState("");
+
+  // const fetchProducts = async () => {
+  //   const data = await fetch("http://localhost:5000/products", {
+  //     method: "GET",
+  //   });
+  //   var body = await data.json();
+  //   let products = body.products;
+  //   if (products.length > 0) {
+  //     setProducts(products);
+  //   } else {
+  //     setError("No items");
+  //   }
+  // };
+
+  // localStorage.setItem("products", JSON.stringify(products));
 
   // useEffect(() => {
   //   fetchProducts();
-  // });
-  fetchProducts();
-  console.log(products.length);
+  // }, []);
+
+  // if (products) return <p>Loading...</p>;
+
   return (
-    <div>
-      {products.length && <p>Loading...</p>}
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Grid container justify="center" spacing={4}>
-          {products.map((product) => (
-            <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-              <Product product={product} onAddToCart={onAddToCart} />
-            </Grid>
-          ))}
-        </Grid>
-      </main>
-    </div>
+    <section id="products" style={{ marginBottom: "1rem" }}>
+      <div className="container">
+        <div className=" products__container">
+          <h1 className="products__title">Products List</h1>
+          {products &&
+            products.map((product) => (
+              <div className="grid__product" key={product.id}>
+                <Product product={product} onAddToCart={handleAddToCart} />
+              </div>
+            ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

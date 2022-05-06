@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { AddShoppingCart } from "@material-ui/icons";
-import useStyles from "./productStyles";
+import useStyles from "../Products/Product/productStyles";
 
 const Product2 = ({ product, onAddToCart, children }) => {
   const classes = useStyles();

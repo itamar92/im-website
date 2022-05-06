@@ -13,7 +13,7 @@ import { ProductsContext } from "../Products/Context/ProductsContext";
 
 const Navbar = ({ user }) => {
   const { cart } = useContext(ProductsContext);
-  const [activeNav, setActiveNav] = useState("/");
+  const [activeNav, setActiveNav] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
   const location = useLocation();
@@ -22,7 +22,7 @@ const Navbar = ({ user }) => {
   return (
     <nav>
       <ul>
-        <HashLink to="/#head">
+        <HashLink to="/#head" onClick={() => setActiveNav("")}>
           <img src={LOGO} alt="logo" className="nav__logo" />{" "}
         </HashLink>
         <HashLink
@@ -35,19 +35,19 @@ const Navbar = ({ user }) => {
 
         <HashLink
           to="/#about"
-          onClick={() => setActiveNav("#about")}
+          onClick={() => setActiveNav("/#about")}
           className={activeNav === "#about" ? "active" : ""}
         >
           About
         </HashLink>
 
-        <Link
-          onClick={() => setActiveNav("/products")}
-          className={activeNav === "/products" ? "active" : ""}
-          to="/products"
+        <HashLink
+          to="/products#products"
+          onClick={() => setActiveNav("/products#products")}
+          className={activeNav === "/products#products" ? "active" : ""}
         >
           <li> Products</li>
-        </Link>
+        </HashLink>
         <a
           href="#contact"
           onClick={() => setActiveNav("#contact")}
