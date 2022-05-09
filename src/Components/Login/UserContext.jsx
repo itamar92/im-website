@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, createContext } from "react";
 
 export const UserContext = createContext({});
 
@@ -7,46 +7,37 @@ function UserProvider({ children }) {
     name: "",
     email: "",
     password: "",
-    isLoggedIn: false,
   });
-  const [user, setUser] = useState();
+  const [userName, setUser] = useState("");
   const [error, setError] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const onLogin = async () => {
+  const login = async (email, password) => {
     var response = await fetch(
-      `http://localhost:5000/users?email=${details.email}&password=${details.password}`,
+      `http://localhost:5000/users?email=${email}&password=${password}`,
       { method: "GET" }
     );
 
-    var body = await response.json();
-    console.log(body);
-    console.log(body.length);
-
-    if (body.length === 1) {
-      setDetails({
-        name: body[0].name,
-        email: body[0].email,
-        password: body[0].password,
-        isLoggedIn: true,
-      });
-      setUser(body[0]);
-      setIsOpen(false);
-      console.log(user);
-    } else {
-      console.log("Details not match!");
-      setError("Details not match!");
-    }
+    return await response.json();
   };
 
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
-    }
-  }, []);
-
-  return <UserContext.Provider>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider
+      value={{
+        details,
+        setDetails,
+        error,
+        setError,
+        userName,
+        setUser,
+        isLoggedIn,
+        setIsLoggedIn,
+        login,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 }
 
-export default UserContext;
+export default UserProvider;

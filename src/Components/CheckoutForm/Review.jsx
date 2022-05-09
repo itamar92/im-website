@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Typography, List, ListItem, ListItemText } from "@material-ui/core";
+import { ProductsContext } from "../../Components/Products/Context/ProductsContext";
 
 const Review = ({ cartItems, total }) => {
-  console.log(cartItems);
+  const { cart } = useContext(ProductsContext);
+  const { price } = useContext(ProductsContext);
+  console.log(cart);
   return (
     <>
       <Typography variant="h6" gutterBottom>
         Order Summery
       </Typography>
       <List disablePadding>
-        {cartItems.map((product) => (
+        {cart.map((product) => (
           <ListItem style={{ padding: "10px 0" }} key={product.productName}>
             <ListItemText
               primary={product.productName}
@@ -23,7 +26,7 @@ const Review = ({ cartItems, total }) => {
         <ListItem style={{ padding: "10px 0" }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-            {total}
+            {price}
           </Typography>
         </ListItem>
       </List>

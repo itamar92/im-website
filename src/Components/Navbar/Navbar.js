@@ -18,7 +18,6 @@ const Navbar = ({ user }) => {
   const classes = useStyles();
   const location = useLocation();
 
-  let totalItems = totalCart;
   return (
     <nav>
       <ul>
@@ -56,7 +55,7 @@ const Navbar = ({ user }) => {
           Contact
         </a>
         <button className="nav__btn" onClick={() => setIsOpen(true)}>
-          <LoginControl userName={user.name} />
+          <LoginControl />
         </button>
         <Portalpage open={isOpen} onClose={() => setIsOpen(false)}>
           {<LoginForm setIsOpen={setIsOpen} />}
@@ -70,7 +69,7 @@ const Navbar = ({ user }) => {
               aria-label="Show cart items"
               color="inherit"
             >
-              <Badge badgeContent={totalItems} color="secondary">
+              <Badge badgeContent={totalCart} color="secondary">
                 <ShoppingCart />
               </Badge>
             </IconButton>

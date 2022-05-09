@@ -46,6 +46,15 @@ form .form-inner {
     z-index: 4;
 }
 
+form .log-out {
+    position: relative;
+    display: block;
+    background-color: #2c2c6c;
+    padding: 30px;
+    z-index: 4;
+}
+
+
 form .form-inner h2 {
     color : rgba(255, 255, 255, 0.783);
      margin-bottom: 30px;
@@ -85,7 +94,7 @@ form .form-inner .form-group input:focus {
     color: red;
 }
 
-form .form-inner input[type="submit"],
+form .form-inner  input[type="submit"],
 .welcom button {
     display: inline-block;
     padding: 10px 15px;
@@ -102,24 +111,6 @@ form .form-inner input[type="submit"],
 form .form-inner input[type="submit"]:hover,
 .welcom button:hover {
     background-position: 100% 0%;
-}
-
-.welcom {
-    width: 500%;
-    max-width: 480px;
-    padding: 15px 30px;
-}
-
-.welcom h2 {
-    color: rgba(255, 255, 255, 0.783);
-    font-size: 5rem;
-    font-weight: 600;
-    margin-bottom: 30px ;
-}
-
-.welcome h2 span {
-    color:rgba(40, 65, 255, 0.73);
-    font-weight: 600;
 }
 
 /*================================ PORTAL PAGE ========================== */

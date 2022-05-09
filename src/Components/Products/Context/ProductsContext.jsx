@@ -16,8 +16,8 @@ function ProductProvider({ children }) {
     });
     var body = await data.json();
 
-    if (body.products.length > 0) {
-      setProducts(body.products);
+    if (body.length > 0) {
+      setProducts(body);
     } else {
       setError("No items");
     }
@@ -27,6 +27,7 @@ function ProductProvider({ children }) {
   const handleAddToCart = (product) => {
     let index = cart.findIndex((x) => x.id === product.id);
     console.log(index);
+    console.log(cart);
     if (index === -1) {
       setCart([...cart, { ...product, quantity: 1 }]);
       handlePrice();
@@ -35,7 +36,7 @@ function ProductProvider({ children }) {
     } else {
       setCart(
         cart.map((x) =>
-          x.id === product.id ? { ...product, quantity: (x.quantity += 1) } : x
+          x.id === product.id ? { ...product, quantity: x.quantity + 1 } : x
         )
       );
       handlePrice();
@@ -53,7 +54,7 @@ function ProductProvider({ children }) {
       setCart(
         cart.map((x) =>
           x.id === product.id
-            ? { ...product, quantity: (product.quantity += quantity) }
+            ? { ...product, quantity: product.quantity + quantity }
             : x
         )
       );
@@ -81,18 +82,19 @@ function ProductProvider({ children }) {
   };
 
   const handlePrice = () => {
-    let sum = 0;
-    cart.map((item) => (sum += item.quantity * item.price));
-    setPrice(sum);
+    // let sum = 0;
+    // cart.map((item) => (sum += item.quantity * item.price));
+    const totalPrice = cart.reduce(
+      (acc, item) => acc + item.quantity * item.price,
+      0
+    );
+    setPrice(totalPrice);
   };
   const handleTotalCart = (num) => {
-    let sum = 0;
-    const total = cart.map((item) => (sum += item.quantity));
-    {
-      total === 0 ? (sum = num) : (sum = sum);
-    }
-    setTotalCart(sum);
-    console.log(sum);
+    const total = cart.reduce((acc, item) => acc + item.quantity, 0);
+    setTotalCart(total);
+
+    console.log("Total Cart", total);
   };
 
   //#endregion

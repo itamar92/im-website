@@ -1,15 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "./UserContext";
 
 function LoginForm({ setIsOpen }) {
-  const [details, setDetails] = useState({
-    name: "",
-    email: "",
-    password: "",
-    isLoggedIn: false,
-  });
-  const [user, setUser] = useState();
-  const [error, setError] = useState("");
+  const { details, setDetails } = useContext(UserContext);
+  const { error, setError } = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+  const { userName, setUser } = useContext(UserContext);
+  const { login } = useContext(UserContext);
   const [passwordShown, setPasswordShown] = useState(false);
 
   const togglePassword = () => {
@@ -17,49 +15,54 @@ function LoginForm({ setIsOpen }) {
   };
 
   const submitHandler = async (e) => {
-    if (details.isLoggedIn === false) {
+    if (isLoggedIn === false) {
       e.preventDefault();
     }
   };
 
   const onLogin = async () => {
-    var response = await fetch(
-      `http://localhost:5000/users?email=${details.email}&password=${details.password}`,
-      { method: "GET" }
-    );
-
-    var body = await response.json();
-    console.log(body);
-    console.log(body.length);
+    const body = await login(details.email, details.password);
 
     if (body.length === 1) {
       setDetails({
         name: body[0].name,
         email: body[0].email,
         password: body[0].password,
-        isLoggedIn: true,
       });
+      console.log(body[0]);
+      setIsLoggedIn(true);
       setUser(body[0].name);
       setIsOpen(false);
-      console.log(user);
+      console.log(details.name);
     } else {
       console.log("Details not match!");
       setError("Details not match!");
     }
   };
 
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
-      setUser(foundUser);
-    }
-  }, []);
+  const onLogout = () => {
+    setDetails({ name: "", email: "", password: "" });
+    setUser("");
+    setIsLoggedIn(false);
+    setIsOpen(false);
+  };
 
-  if (user) {
-    return <div>{user.name}</div>;
-  }
-
+  console.log("UserName:", userName);
+  if (isLoggedIn)
+    return (
+      <form>
+        <div className="form-inner">
+          <h2>Logout?</h2>
+          <input
+            type="submit"
+            name="submit"
+            id="submit"
+            onClick={onLogout}
+            value="Logout"
+          />
+        </div>
+      </form>
+    );
   return (
     <form onSubmit={submitHandler}>
       <div className="form-inner">
@@ -74,6 +77,7 @@ function LoginForm({ setIsOpen }) {
             id="email"
             onChange={(e) => setDetails({ ...details, email: e.target.value })}
             value={details.email}
+            required
           />
         </div>
         <div className="form-group">
@@ -86,6 +90,7 @@ function LoginForm({ setIsOpen }) {
               setDetails({ ...details, password: e.target.value })
             }
             value={details.password}
+            required
           />
           <button onClick={togglePassword}>Show Password</button>
         </div>
