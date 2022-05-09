@@ -1,0 +1,18 @@
+
+/* ===================================  FOOTER SOCIALS =================================== */
+
+.footer__socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.8rem;
+    left: 0;
+    margin: 4px;
+}
+
+/* .footer__socials::after {
+    content: '';
+    width: 1px;
+    height: 2rem ;
+    background: var(--color-primary);
+} */

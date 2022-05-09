@@ -1,7 +1,7 @@
 import React from "react";
 import "./header.css";
 import LOGO from "../../Image/Logo_IM_1.png";
-import HeaderSocial from "./HeaderSocial";
+import FooterSocial from "../Footer/FooterSocial";
 import About from "../About/About";
 
 const Header = () => {
@@ -29,7 +29,6 @@ const Header = () => {
               {" "}
               Scroll Down
             </a> */}
-            <HeaderSocial />
           </div>
         </header>
       </section>

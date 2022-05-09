@@ -1,6 +1,8 @@
 import React from "react";
 import TableFooter from "@mui/material/TableFooter";
 import { Container, Grid, Box } from "@material-ui/core";
+import FooterSocial from "./FooterSocial";
+import "./footer.css";
 
 const Footer = () => {
   return (
@@ -16,6 +18,7 @@ const Footer = () => {
             <Box borderBottom={1} textAlign="center" pt={{ xs: 3, sm: 3 }}>
               Developet By Itamar Miron Using React Native &reg;{" "}
               {new Date().getFullYear()}
+              <FooterSocial />
             </Box>
           </Grid>
         </Container>

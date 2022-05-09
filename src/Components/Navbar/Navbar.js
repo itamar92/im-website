@@ -11,12 +11,15 @@ import LoginControl from "../Login/LoginControl";
 import { HashLink } from "react-router-hash-link";
 import { ProductsContext } from "../Products/Context/ProductsContext";
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
   const { totalCart } = useContext(ProductsContext);
   const [activeNav, setActiveNav] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [cartIsHidden, setCartIsHidden] = useState(true);
   const classes = useStyles();
   const location = useLocation();
+
+  const toggleHidden = () => setCartIsHidden(false);
 
   return (
     <nav>
@@ -70,7 +73,7 @@ const Navbar = ({ user }) => {
               color="inherit"
             >
               <Badge badgeContent={totalCart} color="secondary">
-                <ShoppingCart />
+                <ShoppingCart cartIsHidden={toggleHidden} />
               </Badge>
             </IconButton>
           </div>

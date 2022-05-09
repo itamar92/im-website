@@ -10,7 +10,7 @@ import ProductProvider from "./Components/Products/Context/ProductsContext";
 import UserProvider from "./Components/Login/UserContext";
 import NotFound from "./Components/NotFound";
 import Checkout from "./Components/CheckoutForm/Checkout/Checkout";
-import Footer from "./Components/Footer";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   const [userName, setUser] = useState(null);
