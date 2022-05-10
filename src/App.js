@@ -54,6 +54,7 @@ function App() {
               <Route exact path="/cart">
                 <Cart />
               </Route>
+
               <Route exact path="/checkout">
                 <Checkout />
               </Route>
@@ -74,21 +75,3 @@ function App() {
 }
 
 export default App;
-
-// <Navbar />
-//         <div className="content">
-//           <Switch>
-//             <Route exact path="/">
-//               <Home />
-//             </Route>
-//             <Route path="/create">
-//               <Create />
-//             </Route>
-//             <Route path="/blogs/:id">
-//               <BlogDetails />
-//             </Route>
-//             <Route path="*">
-//               <NotFound />
-//             </Route>
-//           </Switch>
-//         </div>

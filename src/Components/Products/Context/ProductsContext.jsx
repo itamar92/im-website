@@ -6,7 +6,7 @@ function ProductProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const [cart, setCart] = useState([]);
-  const [totalCart, setTotalCart] = useState();
+  const [totalCart, setTotalCart] = useState(0);
   const [price, setPrice] = useState(0);
 
   // fetching products from data
@@ -23,6 +23,25 @@ function ProductProvider({ children }) {
     }
   };
 
+  const addProduct = (name, price) => {
+    let newProduct = { name: name, price: price, id: getLastProductId() + 1 };
+    let p = localStorage.getItem("products");
+    let arr = JSON.parse(p);
+    arr.push(newProduct);
+    localStorage.setItem("products", JSON.stringify(arr));
+  };
+
+  const getLastProductId = () => {
+    let p = localStorage.getItem("products");
+    if (p === null) {
+      return 0;
+    } else {
+      let arr = JSON.parse(p);
+      let lastItemInArry = arr.slice(-1)[0];
+      return lastItemInArry.id;
+    }
+  };
+
   //#region Cart Actions
   const handleAddToCart = (product) => {
     let index = cart.findIndex((x) => x.id === product.id);
@@ -30,17 +49,13 @@ function ProductProvider({ children }) {
     console.log(cart);
     if (index === -1) {
       setCart([...cart, { ...product, quantity: 1 }]);
-      handlePrice();
-      handleTotalCart(1);
-      console.log(product);
     } else {
       setCart(
         cart.map((x) =>
           x.id === product.id ? { ...product, quantity: x.quantity + 1 } : x
         )
       );
-      handlePrice();
-      handleTotalCart();
+
       console.log(product.quantity);
     }
   };
@@ -91,7 +106,13 @@ function ProductProvider({ children }) {
     setPrice(totalPrice);
   };
   const handleTotalCart = (num) => {
-    const total = cart.reduce((acc, item) => acc + item.quantity, 0);
+    console.log(cart);
+    const total = cart.reduce((acc, item) => {
+      console.log("Item quantity:", item.quantity);
+      console.log("acc: ", acc);
+
+      return acc + item.quantity;
+    }, 0);
     setTotalCart(total);
 
     console.log("Total Cart", total);

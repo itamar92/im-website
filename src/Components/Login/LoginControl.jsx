@@ -6,6 +6,7 @@ import { UserContext } from "./UserContext";
 function LoginControl() {
   const { userName } = useContext(UserContext);
   const { isLoggedIn } = useContext(UserContext);
+  // const [userName, setUserName] = useState("")
 
   //#region Avatar Icon Color
   function stringToColor(string) {

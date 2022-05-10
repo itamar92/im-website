@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import "./navbar.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Portalpage from "../Login/Portalpage";
 import LoginForm from "../Login/LoginForm";
 import LOGO from "../../Image/Logo_IM icon.png";
@@ -10,16 +10,33 @@ import useStyles from "./navbarStyles";
 import LoginControl from "../Login/LoginControl";
 import { HashLink } from "react-router-hash-link";
 import { ProductsContext } from "../Products/Context/ProductsContext";
+import CartDropDown from "../Cart/CartDropDown";
 
 const Navbar = () => {
-  const { totalCart } = useContext(ProductsContext);
+  // const { totalCart } = useContext(ProductsContext);
+  const { cart } = useContext(ProductsContext);
   const [activeNav, setActiveNav] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [cartIsHidden, setCartIsHidden] = useState(true);
+  const [totalCart, setTotalCart] = useState();
   const classes = useStyles();
   const location = useLocation();
 
-  const toggleHidden = () => setCartIsHidden(false);
+  const toggleHidden = () => setCartIsHidden(!cartIsHidden);
+
+  const getTotalCart = () => {
+    const total = cart.reduce((acc, item) => {
+      console.log("Item quantity:", item.quantity);
+      console.log("acc: ", acc);
+      return acc + item.quantity;
+    }, 0);
+    console.log("Total Cart", total);
+    setTotalCart(total);
+  };
+
+  useEffect(() => {
+    getTotalCart();
+  }, [cart]);
 
   return (
     <nav>
@@ -71,9 +88,20 @@ const Navbar = () => {
               to="/cart"
               aria-label="Show cart items"
               color="inherit"
+              onClick={() => {
+                toggleHidden();
+              }}
             >
               <Badge badgeContent={totalCart} color="secondary">
-                <ShoppingCart cartIsHidden={toggleHidden} />
+                <ShoppingCart />
+
+                {/* {cartIsHidden ? null : (
+                  <CartDropDown
+                    cartItems={cart}
+                    cartIsHidden={toggleHidden}
+                    totalCart={totalCart}
+                  />
+                )} */}
               </Badge>
             </IconButton>
           </div>

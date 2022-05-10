@@ -12,30 +12,19 @@ const Cart = () => {
   const { handleRemoveFromCart } = useContext(ProductsContext);
   const { handleEmptyCart } = useContext(ProductsContext);
   const { handleUpdateCartQty } = useContext(ProductsContext);
-  const { price } = useContext(ProductsContext);
+  // const { price } = useContext(ProductsContext);
 
-  // const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0);
 
-  // // const handleEmptyCart = () => onEmptyCart();
-  // const onRemoveFromCart = () => {
-  //   handleRemoveFromCart();
-  //   handlePrice();
-  // };
+  const getTotalPrice = () => {
+    let sum = 0;
+    cart.map((item) => (sum += item.quantity * item.price));
+    setPrice(sum);
+  };
 
-  // const onUpdateCartQty = () => {
-  //   handleUpdateCartQty();
-  //   handlePrice();
-  // };
-
-  // const handlePrice = () => {
-  //   let sum = 0;
-  //   cart.map((item) => (sum += item.quantity * item.price));
-  //   setPrice(sum);
-  // };
-
-  // useEffect(() => {
-  //   handlePrice();
-  // });
+  useEffect(() => {
+    getTotalPrice();
+  }, [cart]);
 
   const renderEmptyCart = () => (
     <div className={classes.cartContainer}>

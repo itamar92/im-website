@@ -1,18 +1,24 @@
-import React, { useContext } from "react";
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Grid,
-} from "@material-ui/core";
+import React, { useContext, useState, useEffect } from "react";
+import { Typography, List, ListItem } from "@material-ui/core";
 import { ProductsContext } from "../../Components/Products/Context/ProductsContext";
 import "./Checkout.css";
 
 const Review = () => {
   const { cart } = useContext(ProductsContext);
-  const { price } = useContext(ProductsContext);
-  console.log(cart);
+  // const { price } = useContext(ProductsContext);
+  // console.log(cart);
+  const [price, setPrice] = useState(0);
+
+  const getTotalPrice = () => {
+    let sum = 0;
+    cart.map((item) => (sum += item.quantity * item.price));
+    setPrice(sum);
+  };
+
+  useEffect(() => {
+    getTotalPrice();
+  }, [cart]);
+
   return (
     <div className="grid__checkout">
       <Typography variant="h6" gutterBottom>
