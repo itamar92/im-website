@@ -11,6 +11,7 @@ import UserProvider from "./Components/Login/UserContext";
 import NotFound from "./Components/NotFound";
 import Checkout from "./Components/CheckoutForm/Checkout/Checkout";
 import Footer from "./Components/Footer/Footer";
+import SingleProduct from "./Components/Products/Product/SingleProduct";
 
 function App() {
   const [userName, setUser] = useState(null);
@@ -50,6 +51,9 @@ function App() {
               </Route>
               <Route path="/products">
                 <Products />
+              </Route>
+              <Route exact path="/product/:id">
+                <SingleProduct />
               </Route>
               <Route exact path="/cart">
                 <Cart />

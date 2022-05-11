@@ -11,10 +11,12 @@ import LoginControl from "../Login/LoginControl";
 import { HashLink } from "react-router-hash-link";
 import { ProductsContext } from "../Products/Context/ProductsContext";
 import CartDropDown from "../Cart/CartDropDown";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   // const { totalCart } = useContext(ProductsContext);
   const { cart } = useContext(ProductsContext);
+  const { products } = useContext(ProductsContext);
   const [activeNav, setActiveNav] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [cartIsHidden, setCartIsHidden] = useState(true);
@@ -26,8 +28,6 @@ const Navbar = () => {
 
   const getTotalCart = () => {
     const total = cart.reduce((acc, item) => {
-      console.log("Item quantity:", item.quantity);
-      console.log("acc: ", acc);
       return acc + item.quantity;
     }, 0);
     console.log("Total Cart", total);
@@ -44,6 +44,7 @@ const Navbar = () => {
         <HashLink to="/#head" onClick={() => setActiveNav("")}>
           <img src={LOGO} alt="logo" className="nav__logo" />{" "}
         </HashLink>
+        <SearchBar data={products} />
         <HashLink
           onClick={() => setActiveNav("")}
           className={activeNav === "" ? "active" : "/"}

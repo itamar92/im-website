@@ -30,13 +30,7 @@ function LoginControl() {
   function stringAvatar(name) {
     console.log(name);
     return {
-      sx: {
-        bgcolor: stringToColor(name),
-        width: 30,
-        height: 30,
-        fontSize: 20,
-      },
-      children: `${name.split(" ")[0][0]}`,
+      children: name[0],
     };
   }
   //#endregion
@@ -45,7 +39,15 @@ function LoginControl() {
   if (isLoggedIn) {
     loginName = (
       <div>
-        <Avatar {...stringAvatar("Itamar")} />
+        <Avatar
+          sx={{
+            bgcolor: stringToColor(userName),
+            width: 30,
+            height: 30,
+            fontSize: 20,
+          }}
+          children={userName[0]}
+        />
         <h3 style={{ paddingLeft: "45px", marginTop: "-27px" }}> {userName}</h3>
       </div>
     );

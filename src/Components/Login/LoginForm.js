@@ -17,7 +17,7 @@ function LoginForm({ setIsOpen }) {
   const submitHandler = async (e) => {
     if (isLoggedIn === false) {
       e.preventDefault();
-    }
+    } else setUser(details.name);
   };
 
   const onLogin = async () => {
@@ -29,13 +29,11 @@ function LoginForm({ setIsOpen }) {
         email: body[0].email,
         password: body[0].password,
       });
-      console.log(body[0]);
       setIsLoggedIn(true);
       setUser(body[0].name);
+      console.log("Login FORM", body[0].name);
       setIsOpen(false);
-      console.log(details.name);
     } else {
-      console.log("Details not match!");
       setError("Details not match!");
     }
   };
