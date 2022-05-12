@@ -1,4 +1,4 @@
-import { useState, histo } from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import TextField from "@mui/material/TextField";
@@ -9,15 +9,26 @@ const SearchBar = ({ data }) => {
   let history = useHistory();
   const [searchFilter, setSearchFilter] = useState([]);
 
+  // const handleFilter = (value) => {
+  //   const searchWord = value.productName;
+  //   console.log(value);
+  //   if (!searchWord) return;
+  //   const filterWords = data.filter((value) => {
+  //     return value.productName.toLowerCase().includes(searchWord.toLowerCase());
+  //     // value.tags.toLowerCase().includes(searchWord.toLowerCase())
+  //   });
+  //   setSearchFilter(filterWords);
+  //   console.log("Filtered", filterWords);
+  //   console.log("searchFilter", searchFilter);
+  // };
+
   const handleFilter = (e) => {
-    const searchWord = e.target.value;
-    if (!searchWord) return;
-    const filterWords = data.filter((value) => {
-      return value.productName.toLowerCase().includes(searchWord.toLowerCase());
-      // value.tags.toLowerCase().includes(searchWord.toLowerCase())
-    });
-    setSearchFilter(filterWords);
-    console.log("Filtered", filterWords);
+    setSearchFilter(e.target.value);
+    console.log(searchFilter);
+  };
+
+  const handleOnClick = () => {
+    console.log("Clicked");
   };
 
   return (
@@ -55,13 +66,15 @@ const SearchBar = ({ data }) => {
           },
         }}
         options={data}
+        value={data.find((x) => x.productName === searchFilter)}
         getOptionLabel={(option) => `${option.productName} ${option.tags}`}
-        id="auto-complete"
-        autoComplete
+        filterSelectedOptions
         size="meduim"
         includeInputInList
-        onChange={() => handleFilter}
-        onClick={() => history.push(`/product/${searchFilter.id}`)}
+        // onInputChange={handleFilter}
+        // onChange={(event, value) => {
+        //   handleFilter(value);
+        // }}
         renderInput={(params) => (
           <TextField
             className="search__text"
@@ -72,10 +85,19 @@ const SearchBar = ({ data }) => {
               },
             }}
             {...params}
+            value={searchFilter.productName}
+            name="search"
             label="Search music..."
             variant="outlined"
           />
         )}
+        onChange={(e, obj) => {
+          console.log(obj);
+          history.push(`/product/${obj.id}`);
+        }}
+        // renderOption={(option) => (
+        //   <React.Fragment>{option.productName}</React.Fragment>
+        // )}
       />
     </div>
   );

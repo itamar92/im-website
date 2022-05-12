@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { UserContext } from "./UserContext";
@@ -27,12 +27,6 @@ function LoginControl() {
     return color;
   }
 
-  function stringAvatar(name) {
-    console.log(name);
-    return {
-      children: name[0],
-    };
-  }
   //#endregion
 
   let loginName;

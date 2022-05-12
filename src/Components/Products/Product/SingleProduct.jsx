@@ -1,17 +1,4 @@
-import React, { useContext } from "react";
-import { useTheme } from "@mui/material/styles";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
-  Box,
-  Typography,
-  IconButton,
-} from "@material-ui/core";
-import AudioPlayer from "material-ui-audio-player";
-import { AddShoppingCart } from "@material-ui/icons";
-import useStyles from "./productStyles";
+import React, { useState, useContext } from "react";
 import "../products.css";
 import { useParams } from "react-router-dom";
 import Product from "./Product";
@@ -19,12 +6,21 @@ import { ProductsContext } from "../Context/ProductsContext";
 
 const SingleProduct = () => {
   const { products, handleAddToCart } = useContext(ProductsContext);
+  const [productToShow, setProductToShow] = useState([]);
+
   let { id } = useParams();
-  if (!id) return null;
-  const productToShow = products.filter((product) => {
-    return (product.id = id);
-  });
+  if (!id) {
+    return null;
+  } else {
+    let producFilter = products.find((x) => x.id === id);
+    setProductToShow(producFilter);
+  }
   console.log("product to show: ", productToShow);
+  console.log("product id to show: ", id);
+
+  // const productToShow = products.filter((product) => {
+  //   return product.id === id;
+  // });
 
   return (
     <section id="products" style={{ marginBottom: "1rem" }}>
