@@ -6,12 +6,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "./navbar.css";
 
 const SearchBar = ({ data }) => {
+  let history = useHistory();
   const [searchFilter, setSearchFilter] = useState([]);
-
-  const defaultProps = {
-    options: data,
-    getOptionLabel: (option) => option.productName,
-  };
 
   const handleFilter = (e) => {
     const searchWord = e.target.value;
@@ -23,8 +19,6 @@ const SearchBar = ({ data }) => {
     setSearchFilter(filterWords);
     console.log("Filtered", filterWords);
   };
-
-  let history = useHistory();
 
   return (
     <div className="search">
@@ -66,7 +60,8 @@ const SearchBar = ({ data }) => {
         autoComplete
         size="meduim"
         includeInputInList
-        onClick={(event) => event.preventDefault()}
+        onChange={() => handleFilter}
+        onClick={() => history.push(`/product/${searchFilter.id}`)}
         renderInput={(params) => (
           <TextField
             className="search__text"
@@ -79,7 +74,6 @@ const SearchBar = ({ data }) => {
             {...params}
             label="Search music..."
             variant="outlined"
-            onClick={() => history.push(`/product/${params.id}`)}
           />
         )}
       />
