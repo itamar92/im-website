@@ -9,12 +9,12 @@ const SingleProduct = () => {
   const [productToShow, setProductToShow] = useState([]);
 
   let { id } = useParams();
-  if (!id) {
-    return null;
-  } else {
-    let producFilter = products.find((x) => x.id === id);
-    setProductToShow(producFilter);
-  }
+  if (!id) return null;
+
+  let productFilter = products.filter((item) => item.id === id);
+  console.log("product Filter: ", productFilter);
+  setProductToShow(productFilter);
+
   console.log("product to show: ", productToShow);
   console.log("product id to show: ", id);
 

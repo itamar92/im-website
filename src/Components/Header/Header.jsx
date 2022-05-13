@@ -3,6 +3,7 @@ import "./header.css";
 import LOGO from "../../Image/Logo_IM_1.png";
 import FooterSocial from "../Footer/FooterSocial";
 import About from "../About/About";
+import Contact from "../Contact/Contact";
 
 const Header = () => {
   return (
@@ -34,6 +35,7 @@ const Header = () => {
       </section>
 
       <About />
+      <Contact />
     </div>
   );
 };
