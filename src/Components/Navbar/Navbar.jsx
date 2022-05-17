@@ -3,13 +3,14 @@ import "./navbar.css";
 import { useState, useContext, useEffect } from "react";
 import Portalpage from "../Login/Portalpage";
 import LoginForm from "../Login/LoginForm";
-import LOGO from "../../Image/Logo_IM icon.png";
+import LOGO from "../../assents/Logo_IM icon.png";
 import { IconButton, Badge } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import useStyles from "./navbarStyles";
 import LoginControl from "../Login/LoginControl";
 import { HashLink } from "react-router-hash-link";
 import { ProductsContext } from "../Products/Context/ProductsContext";
+import { UserContext } from "../Login/UserContext";
 import CartDropDown from "../Cart/CartDropDown";
 import SearchBar from "./SearchBar";
 
@@ -17,6 +18,7 @@ const Navbar = () => {
   // const { totalCart } = useContext(ProductsContext);
   const { cart } = useContext(ProductsContext);
   const { products } = useContext(ProductsContext);
+  const { isAdmin } = useContext(UserContext);
   const [activeNav, setActiveNav] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [cartIsHidden, setCartIsHidden] = useState(true);
@@ -56,7 +58,7 @@ const Navbar = () => {
         <HashLink
           to="/#about"
           onClick={() => setActiveNav("/#about")}
-          className={activeNav === "#about" ? "active" : ""}
+          className={activeNav === "/#about" ? "active" : ""}
         >
           About
         </HashLink>
@@ -68,13 +70,26 @@ const Navbar = () => {
         >
           <li> Products</li>
         </HashLink>
-        <a
-          href="#contact"
-          onClick={() => setActiveNav("#contact")}
-          className={activeNav === "#contact" ? "active" : ""}
+
+        <HashLink
+          to="/#contact"
+          onClick={() => setActiveNav("/#contact")}
+          className={activeNav === "/#contact" ? "active" : ""}
         >
           Contact
-        </a>
+        </HashLink>
+
+        {isAdmin ? (
+          <Link
+            to="/products#products"
+            onClick={() => setActiveNav("/products#products")}
+            className={activeNav === "/products#products" ? "active" : ""}
+          >
+            Orders List{" "}
+          </Link>
+        ) : (
+          ""
+        )}
         <button className="nav__btn" onClick={() => setIsOpen(true)}>
           <LoginControl />
         </button>

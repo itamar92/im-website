@@ -8,6 +8,7 @@ function LoginForm({ setIsOpen }) {
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const { userName, setUser } = useContext(UserContext);
   const { login } = useContext(UserContext);
+  const { isAdmin, setAdmin } = useContext(UserContext);
   const [passwordShown, setPasswordShown] = useState(false);
 
   const togglePassword = () => {
@@ -33,6 +34,7 @@ function LoginForm({ setIsOpen }) {
       setUser(body[0].name);
       console.log("Login FORM", body[0].name);
       setIsOpen(false);
+      if (body[0].role === "admin") setAdmin(true);
     } else {
       setError("Details not match!");
     }
@@ -90,7 +92,9 @@ function LoginForm({ setIsOpen }) {
             value={details.password}
             required
           />
-          <button onClick={togglePassword}>Show Password</button>
+          <button className="btn__psw" onClick={togglePassword}>
+            Show Password
+          </button>
         </div>
         <input
           type="submit"

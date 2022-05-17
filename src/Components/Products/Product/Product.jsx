@@ -13,7 +13,6 @@ import AudioPlayer from "material-ui-audio-player";
 import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./productStyles";
 import "../products.css";
-import IMAGE from "../../../Image/Logo_IM icon Black.png";
 
 const Product = ({ product, onAddToCart }) => {
   const classes = useStyles();
@@ -37,7 +36,7 @@ const Product = ({ product, onAddToCart }) => {
           <CardMedia
             className={classes.media}
             component="img"
-            image={IMAGE}
+            image={product.image}
             title={product.productName}
           />
           <Typography

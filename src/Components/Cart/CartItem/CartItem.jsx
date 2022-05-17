@@ -27,7 +27,7 @@ const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
     <Card className="cart-item">
       <CardMedia
         component="img"
-        image="./Music/Logo_IM icon Black.png"
+        image={item.image}
         alt={item.productName}
         className={classes.media}
       />

@@ -10,8 +10,8 @@ const SingleProduct = () => {
 
   let { id } = useParams();
   if (!id) return null;
-
-  let productFilter = products.filter((item) => item.id === id);
+  console.log("type of id :", typeof id);
+  let productFilter = products.filter((item) => item.id === parseInt(id));
   console.log("product Filter: ", productFilter);
   setProductToShow(productFilter);
 

@@ -43,6 +43,7 @@ form .form-inner {
     display: block;
     background-color: #2c2c6c;
     padding: 30px;
+    border-radius: 5%;
     z-index: 4;
 }
 
@@ -92,6 +93,16 @@ form .form-inner .form-group input:focus {
 
 .error {
     color: red;
+}
+
+.btn__psw {
+    transition: 0.4s;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn__psw:hover{
+    color: #a4a4e3 ;
 }
 
 form .form-inner  input[type="submit"],

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Header from "./Components/Header/Header";
@@ -12,17 +12,9 @@ import NotFound from "./Components/NotFound";
 import Checkout from "./Components/CheckoutForm/Checkout/Checkout";
 import Footer from "./Components/Footer/Footer";
 import SingleProduct from "./Components/Products/Product/SingleProduct";
+import OrdersList from "./Components/Cart/OrdersList";
 
 function App() {
-  const [userName, setUser] = useState(null);
-  const [details, setDetails] = useState({});
-
-  const user = useMemo(() => ({ userName, setUser }), [userName, setUser]);
-  const userDetails = useMemo(
-    () => ({ details, setDetails }),
-    [details, setDetails]
-  );
-
   /*window.localStorage.removeItem("user");*/
 
   // useEffect(() => {
@@ -37,7 +29,7 @@ function App() {
 
   return (
     <div>
-      <UserProvider value={{ user, userDetails }}>
+      <UserProvider>
         <ProductProvider>
           <Router>
             <Navbar />
@@ -59,12 +51,15 @@ function App() {
                 <Cart />
               </Route>
 
-              <Route exact path="/checkout">
+              <Route path="/checkout">
                 <Checkout />
               </Route>
 
               <Route exact path="/about">
                 <About />
+              </Route>
+              <Route path="/ordersList">
+                <OrdersList />
               </Route>
               <Route path="/*">
                 <NotFound />

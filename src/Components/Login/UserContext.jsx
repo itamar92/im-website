@@ -11,6 +11,7 @@ function UserProvider({ children }) {
   const [userName, setUser] = useState("");
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setAdmin] = useState(false);
 
   const login = async (email, password) => {
     var response = await fetch(
@@ -33,6 +34,8 @@ function UserProvider({ children }) {
         isLoggedIn,
         setIsLoggedIn,
         login,
+        isAdmin,
+        setAdmin,
       }}
     >
       {children}

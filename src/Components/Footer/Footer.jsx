@@ -7,7 +7,7 @@ import "./footer.css";
 const Footer = () => {
   return (
     <footer>
-      <Box bgcolor="midnightblue" color="white" fontWeight="300">
+      <Box>
         <Container maxWidth="lg">
           <Grid
             justifyContent="center"
@@ -16,7 +16,7 @@ const Footer = () => {
             style={{ paddingBottom: "24px" }}
           >
             <Box borderBottom={1} textAlign="center" pt={{ xs: 3, sm: 3 }}>
-              Developet By Itamar Miron Using React Native &reg;{" "}
+              Developet By Itamar Miron Using React &reg;{" "}
               {new Date().getFullYear()}
               <FooterSocial />
             </Box>

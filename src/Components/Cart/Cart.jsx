@@ -4,22 +4,26 @@ import { Link } from "react-router-dom";
 import CartItem from "./CartItem/CartItem";
 import useStyles from "./cartStyles";
 import { ProductsContext } from "../Products/Context/ProductsContext";
+import { UserContext } from "../Login/UserContext";
 
 const Cart = () => {
   const classes = useStyles();
   const { cart } = useContext(ProductsContext);
-  const { handleAddToCart } = useContext(ProductsContext);
   const { handleRemoveFromCart } = useContext(ProductsContext);
   const { handleEmptyCart } = useContext(ProductsContext);
   const { handleUpdateCartQty } = useContext(ProductsContext);
-  // const { price } = useContext(ProductsContext);
-
+  const { isLoggedIn } = useContext(UserContext);
+  const [error, setError] = useState("");
   const [price, setPrice] = useState(0);
 
   const getTotalPrice = () => {
     let sum = 0;
     cart.map((item) => (sum += item.quantity * item.price));
     setPrice(sum);
+  };
+
+  const handleCheckoutClick = () => {
+    setError("You need to Sign in First");
   };
 
   useEffect(() => {
@@ -54,6 +58,7 @@ const Cart = () => {
         ))}
       </Grid>
       <div className={classes.cardDetails}>
+        {error !== "" ? <div className={classes.error}>{error}</div> : ""}
         <Typography variant="h4">Subtotal: ${price}</Typography>
         <div>
           <Button
@@ -66,17 +71,32 @@ const Cart = () => {
           >
             Empty cart
           </Button>
-          <Button
-            className={classes.checkoutButton}
-            component={Link}
-            to="/checkout"
-            size="large"
-            type="button"
-            variant="contained"
-            color="primary"
-          >
-            Checkout
-          </Button>
+          {isLoggedIn ? (
+            <Button
+              className={classes.checkoutButton}
+              component={Link}
+              to="/checkout"
+              size="large"
+              type="button"
+              variant="contained"
+              color="primary"
+            >
+              Checkout
+            </Button>
+          ) : (
+            <>
+              <Button
+                className={classes.checkoutButton}
+                onClick={handleCheckoutClick}
+                size="large"
+                type="button"
+                variant="contained"
+                color="primary"
+              >
+                Checkout
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </>

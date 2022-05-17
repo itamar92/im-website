@@ -33,4 +33,11 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
     paddingBottom: "2rem",
   },
+
+  error: {
+    color: "red",
+    position: "absolute",
+    right: "15%",
+    marginTop: "-35px",
+  },
 }));

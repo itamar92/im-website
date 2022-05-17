@@ -1,7 +1,6 @@
 import React from "react";
 import "./header.css";
-import LOGO from "../../Image/Logo_IM_1.png";
-import FooterSocial from "../Footer/FooterSocial";
+import LOGO from "../../assents/Logo_IM_1.png";
 import About from "../About/About";
 import Contact from "../Contact/Contact";
 

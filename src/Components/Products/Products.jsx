@@ -3,6 +3,11 @@ import Grid from "@material-ui/core/Grid";
 import "./products.css";
 import Product from "./Product/Product";
 import { ProductsContext } from "./Context/ProductsContext";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const Products = () => {
   const { products } = useContext(ProductsContext);
