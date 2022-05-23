@@ -81,9 +81,9 @@ const Navbar = () => {
 
         {isAdmin ? (
           <Link
-            to="/products#products"
-            onClick={() => setActiveNav("/products#products")}
-            className={activeNav === "/products#products" ? "active" : ""}
+            to="/orderslist"
+            onClick={() => setActiveNav("/orderslist")}
+            className={activeNav === "/orderslist" ? "active" : ""}
           >
             Orders List{" "}
           </Link>

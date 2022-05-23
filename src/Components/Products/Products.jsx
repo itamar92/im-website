@@ -1,41 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import "./products.css";
 import Product from "./Product/Product";
 import { ProductsContext } from "./Context/ProductsContext";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { UserContext } from "../Login/UserContext";
+import AddIcon from "@mui/icons-material/Add";
+import { IconButton, Button } from "@material-ui/core";
 
 const Products = () => {
   const { products } = useContext(ProductsContext);
   const { handleAddToCart } = useContext(ProductsContext);
-  // const { data, error, isPending } = useFetch("http://localhost:5000/products");
-
-  // const [error, setError] = useState("");
-
-  // const fetchProducts = async () => {
-  //   const data = await fetch("http://localhost:5000/products", {
-  //     method: "GET",
-  //   });
-  //   var body = await data.json();
-  //   let products = body.products;
-  //   if (products.length > 0) {
-  //     setProducts(products);
-  //   } else {
-  //     setError("No items");
-  //   }
-  // };
-
-  // localStorage.setItem("products", JSON.stringify(products));
-
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, []);
-
-  // if (products) return <p>Loading...</p>;
+  const { addProduct, deleteProduct } = useContext(ProductsContext);
+  const { isAdmin } = useContext(UserContext);
 
   return (
     <section id="products" style={{ marginBottom: "1rem" }}>
@@ -45,9 +22,30 @@ const Products = () => {
           {products &&
             products.map((product) => (
               <div className="grid__product" key={product.id}>
-                <Product product={product} onAddToCart={handleAddToCart} />
+                <Product
+                  product={product}
+                  onAddToCart={handleAddToCart}
+                  isAdmin={isAdmin}
+                  deleteProduct={deleteProduct}
+                  addProduct={addProduct}
+                />
               </div>
             ))}
+          {isAdmin && (
+            <div>
+              <Button
+                className="btn-add"
+                component={Link}
+                to="/createproduct"
+                size="large"
+                type="button"
+                variant="contained"
+                color="primary"
+              >
+                <AddIcon />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </section>

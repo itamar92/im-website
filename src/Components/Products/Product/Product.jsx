@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import {
   Card,
@@ -8,17 +9,27 @@ import {
   Box,
   Typography,
   IconButton,
+  Button,
 } from "@material-ui/core";
 import AudioPlayer from "material-ui-audio-player";
 import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./productStyles";
+import { ProductsContext } from "../Context/ProductsContext";
 import "../products.css";
+import EditProduct from "../EditProduct";
 
-const Product = ({ product, onAddToCart }) => {
+const Product = ({ product, onAddToCart, isAdmin, deleteProduct }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  // const handleAddToCart = () => onAddToCart(product);
+  const handleDelete = (id) => {
+    deleteProduct(id);
+  };
+
+  const handleEdit = (id) => {
+    console.log(id);
+    <EditProduct product={id} />;
+  };
 
   return (
     <Box
@@ -60,6 +71,37 @@ const Product = ({ product, onAddToCart }) => {
           />
         </CardContent>
         <CardActions disableSpacing className={classes.cardActions}>
+          {isAdmin && (
+            <>
+              <Button
+                className={classes.removeButton}
+                size="small"
+                type="button"
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  handleDelete(product.id);
+                }}
+              >
+                Remove Item
+              </Button>
+
+              <Button
+                className={classes.removeButton}
+                component={Link}
+                to="/editproduct"
+                size="small"
+                type="button"
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  handleEdit(product.id);
+                }}
+              >
+                Edit
+              </Button>
+            </>
+          )}
           <Typography variant="h5" component="h2">
             ${product.price}
           </Typography>

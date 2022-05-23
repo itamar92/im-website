@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
+  toolbar: theme.mixins.toolbar,
   root: {
     maxWidth: "100%",
     height: "100%",
@@ -18,9 +19,17 @@ export default makeStyles(() => ({
     justifyContent: "flex-end",
     padding: "4px",
   },
+
   cardContent: {
     display: "flex",
     justifyContent: "space-between",
     height: "1px",
+  },
+  removeButton: {
+    minWidth: "100px",
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "5px",
+    },
+    marginRight: "12px",
   },
 }));

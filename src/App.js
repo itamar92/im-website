@@ -13,20 +13,12 @@ import Checkout from "./Components/CheckoutForm/Checkout/Checkout";
 import Footer from "./Components/Footer/Footer";
 import SingleProduct from "./Components/Products/Product/SingleProduct";
 import OrdersList from "./Components/Cart/OrdersList";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import LoginPermission from "./Components/Login/LoginPermission";
+import CreateProduct from "./Components/Products/CreateProduct";
+import EditProduct from "./Components/Products/EditProduct";
 
 function App() {
-  /*window.localStorage.removeItem("user");*/
-
-  // useEffect(() => {
-  // fetchProducts();
-  // localStorage.setItem("products", JSON.stringify(products));
-  // /*fetchCart();*/
-  //   const user = JSON.parse(localStorage.getItem("user"));
-  //   if (user) {
-  //     setUser(user.name);
-  //   }
-  // }, []);
-
   return (
     <div>
       <UserProvider>
@@ -51,15 +43,24 @@ function App() {
                 <Cart />
               </Route>
 
-              <Route path="/checkout">
+              <ProtectedRoute path="/checkout">
                 <Checkout />
-              </Route>
+              </ProtectedRoute>
 
               <Route exact path="/about">
                 <About />
               </Route>
-              <Route path="/ordersList">
+              <ProtectedRoute path="/orderslist">
                 <OrdersList />
+              </ProtectedRoute>
+              <Route path="/createproduct">
+                <CreateProduct />
+              </Route>
+              <Route path="/editproduct">
+                <EditProduct />
+              </Route>
+              <Route path="/loginpermission">
+                <LoginPermission />
               </Route>
               <Route path="/*">
                 <NotFound />

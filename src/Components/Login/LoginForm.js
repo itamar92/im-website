@@ -1,5 +1,9 @@
 import React from "react";
 import { useState, useContext } from "react";
+import {
+  Redirect,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
 import { UserContext } from "./UserContext";
 
 function LoginForm({ setIsOpen }) {
@@ -10,6 +14,7 @@ function LoginForm({ setIsOpen }) {
   const { login } = useContext(UserContext);
   const { isAdmin, setAdmin } = useContext(UserContext);
   const [passwordShown, setPasswordShown] = useState(false);
+  const { state } = useLocation();
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -35,6 +40,7 @@ function LoginForm({ setIsOpen }) {
       console.log("Login FORM", body[0].name);
       setIsOpen(false);
       if (body[0].role === "admin") setAdmin(true);
+      <Redirect to={state?.from || "/"} />;
     } else {
       setError("Details not match!");
     }
@@ -45,6 +51,7 @@ function LoginForm({ setIsOpen }) {
     setUser("");
     setIsLoggedIn(false);
     setIsOpen(false);
+    setAdmin(false);
   };
 
   console.log("UserName:", userName);

@@ -23,12 +23,56 @@ function ProductProvider({ children }) {
     }
   };
 
-  const addProduct = (name, price) => {
-    let newProduct = { name: name, price: price, id: getLastProductId() + 1 };
+  const addProduct = (newItem) => {
+    let newProduct = {
+      id: getLastProductId() + 1,
+      ...newItem,
+    };
     let p = localStorage.getItem("products");
     let arr = JSON.parse(p);
-    arr.push(newProduct);
+    arr.push(newItem);
     localStorage.setItem("products", JSON.stringify(arr));
+    setProducts((prev) => [...prev, newProduct]);
+
+    if (window.confirm("Do you want to upload to the server?")) {
+      fetch("http://localhost:5000/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      })
+        .then((res) => {
+          alert("File Upload success");
+        })
+        .catch((err) => alert("File Upload Error"));
+    }
+  };
+
+  const changeProduct = (updateItem) => {
+    let updateProduct = { ...updateItem };
+    let itemIndex = products.findIndex((obj) => obj.id === updateItem.id);
+    products[itemIndex] = updateItem;
+    let p = localStorage.getItem("products");
+    let arr = JSON.parse(p);
+    arr.push(updateItem);
+    localStorage.setItem("products", JSON.stringify(products));
+
+    if (window.confirm("Do you want to upload to the server?")) {
+      fetch("http://localhost:5000/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateProduct),
+      })
+        .then((res) => {
+          alert("File Upload success");
+        })
+        .catch((err) => alert("File Upload Error"));
+    }
+  };
+
+  const deleteProduct = (id) => {
+    let newProducts = products.filter((item) => item.id !== id);
+    console.log(newProducts);
+    setProducts(newProducts);
   };
 
   const getLastProductId = () => {
@@ -132,6 +176,7 @@ function ProductProvider({ children }) {
     <ProductsContext.Provider
       value={{
         products,
+        setProducts,
         cart,
         price,
         totalCart,
@@ -140,6 +185,9 @@ function ProductProvider({ children }) {
         handleUpdateCartQty,
         handleRemoveFromCart,
         handleEmptyCart,
+        deleteProduct,
+        addProduct,
+        changeProduct,
       }}
     >
       {children}

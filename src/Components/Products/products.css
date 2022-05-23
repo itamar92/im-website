@@ -70,6 +70,11 @@
 .btn-group{
   margin: 1rem;
 }
+
+.btn-add{
+height: 80px;
+width: 105px;
+}
 /* ===================================  PLAYER  =================================== */
 .player-wrapper{
   position: relative;
@@ -79,6 +84,66 @@
 .react-player{
   width:60px;
   height:150px;
+}
+
+/* ===================================  CREATE PRODUCT  =================================== */
+.create {
+  display: flex;
+  flex-direction: column;
+  /* max-width: 400px; */
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 8rem;
+  align-content: center;
+  align-items: center;
+  justify-items: center;
+}
+ .create label {
+  text-align: left;
+  display: block;
+}
+
+.create form {
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.create input, .create textarea, .create select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+  color: var(--color-white);
+}
+
+.tags-list{
+  display: flex;
+  flex-direction: row;
+  gap: 21px;
+  margin: 15px;
+}
+
+.tags-list input {
+  /* width: 0%; */
+  display: inline-flex;
+}
+
+
+.tags-list-item{
+
+}
+
+.textarea-price{
+max-width: 15%;
+height: 30px;
+}
+
+.lable-price{
+  display: flex;
+  align-items: center;
+  gap: 25px;
 }
 
 

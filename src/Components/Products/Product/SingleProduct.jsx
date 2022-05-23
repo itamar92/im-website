@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "../products.css";
 import { useParams } from "react-router-dom";
 import Product from "./Product";
@@ -7,17 +7,24 @@ import { ProductsContext } from "../Context/ProductsContext";
 const SingleProduct = () => {
   const { products, handleAddToCart } = useContext(ProductsContext);
   const [productToShow, setProductToShow] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   let { id } = useParams();
-  if (!id) return null;
-  console.log("type of id :", typeof id);
-  let productFilter = products.filter((item) => item.id === parseInt(id));
-  console.log("product Filter: ", productFilter);
-  setProductToShow(productFilter);
 
-  console.log("product to show: ", productToShow);
-  console.log("product id to show: ", id);
+  useEffect(() => {
+    if (!id) return null;
+    let productFilter = products.find((item) => item.id === parseInt(id));
+    console.log("product Filter: ", productFilter);
+    console.log("products: ", products);
 
+    setProductToShow(productFilter);
+    setIsLoading(false);
+    // console.log("type of id :", typeof id);
+
+    // console.log("product id to show: ", id);
+  }, [id]);
+
+  // console.log("product to show: ", productToShow);
   // const productToShow = products.filter((product) => {
   //   return product.id === id;
   // });
@@ -29,7 +36,9 @@ const SingleProduct = () => {
           <h1 className="products__title">{productToShow.productName}</h1>
 
           <div className="grid__product">
-            <Product product={productToShow} onAddToCart={handleAddToCart} />
+            {!isLoading && (
+              <Product product={productToShow} onAddToCart={handleAddToCart} />
+            )}
           </div>
         </div>
       </div>
