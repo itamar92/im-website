@@ -1,27 +1,58 @@
 import { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { ProductsContext } from "./Context/ProductsContext";
 import FileUploader from "./FileUploader";
 import Product from "./Product/Product";
 
-const EditProduct = ({ productId }) => {
+const EditProduct = () => {
+  let { id } = useParams();
   const { changeProduct, products } = useContext(ProductsContext);
 
-  const [UpdateProduct, setUpdateProduct] = useState({});
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [updateProduct, setUpdateProduct] = useState();
 
-  const musicTags = ["funky", "Badass", "Coporate", "happy", "Rock"];
+  const musicTags = [
+    "funky",
+    "Badass",
+    "Coporate",
+    "happy",
+    "Rock",
+    "soul",
+    "Trailer",
+  ];
 
   const [isPending, setIsPending] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
-    const findedProductArr = products.filter((x) => x.id === 1);
-    setUpdateProduct(findedProductArr);
-  }, []);
-  console.log(UpdateProduct);
+    console.log(products);
+    console.log(id);
+    let filteredProduct = products.filter((item) => {
+      console.log(item);
+      return item.id === parseInt(id);
+    });
+
+    console.log(filteredProduct);
+    if (filteredProduct !== undefined && filteredProduct.length !== 0) {
+      console.log("yaii");
+      setUpdateProduct({
+        id: filteredProduct[0].id,
+        productName: filteredProduct[0].productName,
+        description: filteredProduct[0].description,
+        tags: filteredProduct[0].tags,
+        composer: filteredProduct[0].composer,
+        price: filteredProduct[0].price,
+        quantity: filteredProduct[0].quantity,
+        src: filteredProduct[0].src,
+        image: filteredProduct[0].image,
+      });
+    }
+  }, [id, products]);
+
+  // console.log(updateProduct);
+  // console.log(UpdateProduct.productName);
+
   const handleTagsOnChange = (item) => {
-    const exist = UpdateProduct.tags.find((x) => x === item);
+    const exist = updateProduct.tags.find((x) => x === item);
     console.log(exist);
     if (!exist) {
       setUpdateProduct((prev) => {
@@ -30,9 +61,9 @@ const EditProduct = ({ productId }) => {
         return x;
       });
     } else {
-      let index = UpdateProduct.tags.indexOf(exist);
+      let index = updateProduct.tags.indexOf(exist);
       console.log(index);
-      const filterTag = UpdateProduct.tags.filter((x) => x === !x[index]);
+      const filterTag = updateProduct.tags.filter((x) => x === !x[index]);
       setUpdateProduct((prev) => {
         let x = { ...prev, tags: filterTag };
         console.log(x);
@@ -45,7 +76,7 @@ const EditProduct = ({ productId }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    changeProduct(UpdateProduct);
+    changeProduct(updateProduct);
     console.log("product Updated");
     setIsPending(true);
 
@@ -60,18 +91,18 @@ const EditProduct = ({ productId }) => {
           type="text"
           required
           maxLength="15"
-          value={UpdateProduct.productName}
+          value={updateProduct?.productName}
           onChange={(e) =>
-            setUpdateProduct({ ...UpdateProduct, productName: e.target.value })
+            setUpdateProduct({ ...updateProduct, productName: e.target.value })
           }
         />
         <label> Product Description:</label>
         <textarea
           required
           maxLength="20"
-          value={UpdateProduct.description}
+          value={updateProduct?.description}
           onChange={(e) =>
-            setUpdateProduct({ ...UpdateProduct, description: e.target.value })
+            setUpdateProduct({ ...updateProduct, description: e.target.value })
           }
         >
           {" "}
@@ -102,27 +133,30 @@ const EditProduct = ({ productId }) => {
             className="textarea-price"
             required
             maxLength="4"
-            value={UpdateProduct.price}
+            value={updateProduct?.price}
             onChange={(e) =>
-              setUpdateProduct({ ...UpdateProduct, price: e.target.value })
+              setUpdateProduct({ ...updateProduct, price: e.target.value })
             }
           />
           <label>$</label>
         </div>
 
-        <FileUploader
+        {/* <FileUploader
           onFileSelectSuccess={(file) => setSelectedFile(file)}
           onFileSelectError={({ error }) => alert(error)}
-        />
+        /> */}
 
         {!isPending && (
           <button className="btn btn-primary"> Update Product</button>
         )}
         {isPending && <button disabled>Adding Product.. </button>}
       </form>
-      <div className="grid__product">
-        <Product product={UpdateProduct} isAdmin={false} />
-      </div>
+
+      {updateProduct && (
+        <div className="grid__product">
+          <Product product={updateProduct} isAdmin={false} />
+        </div>
+      )}
     </div>
   );
 };

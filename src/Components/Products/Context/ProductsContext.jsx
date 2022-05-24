@@ -50,7 +50,13 @@ function ProductProvider({ children }) {
   const changeProduct = (updateItem) => {
     let updateProduct = { ...updateItem };
     let itemIndex = products.findIndex((obj) => obj.id === updateItem.id);
-    products[itemIndex] = updateItem;
+
+    setProducts((prev) => [
+      ...prev.slice(0, itemIndex),
+      updateProduct,
+      ...prev.slice(itemIndex + 1, prev.length),
+    ]);
+
     let p = localStorage.getItem("products");
     let arr = JSON.parse(p);
     arr.push(updateItem);

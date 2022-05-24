@@ -108,7 +108,7 @@ ul {
 
 .search__container{
     position: absolute;
-    left: 20%;
+    left: 16%;
      border-radius:8px;
      margin-top: 2px;
      margin-right: 16px;
@@ -285,20 +285,52 @@ ul {
     nav {
         display: flex;
         padding: 0.7rem 1.7rem;
-        /* transform: translateX(-50%); */
+        width:-webkit-fill-available;
+        transform: translateY(-65%);
+    }
+
+    .search__container{
+        position: relative;
+        left: 10%;
+        max-width: 85%;
+    }
+    .css-dmsy2n-MuiAutocomplete-root {
+        width: 160px;
     }
     .nav__logo{
-right: 90%;
+    right: 90%;
     }
     .nav__btn{
-left: 90%;
+    left:85%;
+    bottom: 65%;
     }
+
+    .cart{
+        right: 15%;
+        bottom: 65%;
     }
+
+    }
+
+    
   
   
   /* ===================================  MEDIA QUERIES (SMALL DEVICES) =================================== */
   @media screen and (max-width: 600px) {
-   
+    nav {
+        display: flex;
+        padding: 0.7rem 1.7rem;
+        width:-webkit-fill-available;
+        transform: translateY(-65%);
+    }
+
+    .nav__logo{
+        display: none;
+        }
+
+        
+
+
     }
   
   

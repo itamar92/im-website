@@ -26,17 +26,8 @@ const Product = ({ product, onAddToCart, isAdmin, deleteProduct }) => {
     deleteProduct(id);
   };
 
-  const handleEdit = (id) => {
-    console.log(id);
-    <EditProduct product={id} />;
-  };
-
   return (
-    <Box
-      sx={{ display: "flex", flexDirection: "column" }}
-      paddingBottom={"2px"}
-      width={"50%"}
-    >
+    <Box className="product__box">
       <Card className={classes.root}>
         <CardContent className="grid__product">
           <div className={classes.cardContent}>
@@ -89,14 +80,11 @@ const Product = ({ product, onAddToCart, isAdmin, deleteProduct }) => {
               <Button
                 className={classes.removeButton}
                 component={Link}
-                to="/editproduct"
+                to={`/editproduct/${product.id}`}
                 size="small"
                 type="button"
                 variant="contained"
                 color="primary"
-                onClick={() => {
-                  handleEdit(product.id);
-                }}
               >
                 Edit
               </Button>

@@ -56,7 +56,7 @@ function App() {
               <Route path="/createproduct">
                 <CreateProduct />
               </Route>
-              <Route path="/editproduct">
+              <Route path="/editproduct/:id">
                 <EditProduct />
               </Route>
               <Route path="/loginpermission">

@@ -15,7 +15,6 @@ import CartDropDown from "../Cart/CartDropDown";
 import SearchBar from "./SearchBar";
 
 const Navbar = () => {
-  // const { totalCart } = useContext(ProductsContext);
   const { cart } = useContext(ProductsContext);
   const { products } = useContext(ProductsContext);
   const { isAdmin } = useContext(UserContext);

@@ -1,4 +1,5 @@
 import { useState, createContext } from "react";
+import { useLocalStorage } from "./useLocalStorage";
 
 export const UserContext = createContext({});
 
@@ -8,10 +9,11 @@ function UserProvider({ children }) {
     email: "",
     password: "",
   });
-  const [userName, setUser] = useState("");
+  const [userName, setUser] = useLocalStorage("user", "");
   const [error, setError] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setAdmin] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage("login", false);
+
+  const [isAdmin, setAdmin] = useLocalStorage("admin", false);
 
   const login = async (email, password) => {
     var response = await fetch(

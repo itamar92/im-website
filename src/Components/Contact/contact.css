@@ -71,6 +71,18 @@
     .container .contact__container{
      width: var(--container-width-sm);
     }
+.contact__option{
+    position: relative;
+    width: 205%;
+    right: 96%;
+}
 
+.contact__form{
+    left: 25%;
+}
+
+.contact__option h5 {
+    font-size:9px;
+}
 
   }

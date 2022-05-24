@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {
   Redirect,
   useLocation,
@@ -27,6 +27,7 @@ function LoginForm({ setIsOpen }) {
   };
 
   const onLogin = async () => {
+    
     const body = await login(details.email, details.password);
 
     if (body.length === 1) {
@@ -37,7 +38,6 @@ function LoginForm({ setIsOpen }) {
       });
       setIsLoggedIn(true);
       setUser(body[0].name);
-      console.log("Login FORM", body[0].name);
       setIsOpen(false);
       if (body[0].role === "admin") setAdmin(true);
       <Redirect to={state?.from || "/"} />;
@@ -54,7 +54,14 @@ function LoginForm({ setIsOpen }) {
     setAdmin(false);
   };
 
-  console.log("UserName:", userName);
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(userName));
+    localStorage.setItem("admin", JSON.stringify(isAdmin));
+  }, [userName]);
+
+  let localUser = localStorage.getItem("user");
+  if (localUser === "") setIsLoggedIn(false);
+
   if (isLoggedIn)
     return (
       <form>
