@@ -1,4 +1,5 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
+import { UserContext } from "../../Login/UserContext";
 
 export const ProductsContext = createContext();
 
@@ -8,6 +9,9 @@ function ProductProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [totalCart, setTotalCart] = useState(0);
   const [price, setPrice] = useState(0);
+  const [userOrders, setUserOrders] = useState([]);
+
+  const { details, fetchUser } = useContext(UserContext);
 
   // fetching products from data
   const fetchProducts = async () => {
@@ -22,7 +26,7 @@ function ProductProvider({ children }) {
       setError("No items");
     }
   };
-
+  //#region Add/Change Product
   const addProduct = (newItem) => {
     let newProduct = {
       id: getLastProductId() + 1,
@@ -91,12 +95,11 @@ function ProductProvider({ children }) {
       return lastItemInArry.id;
     }
   };
+  //#endregion
 
   //#region Cart Actions
   const handleAddToCart = (product) => {
     let index = cart.findIndex((x) => x.id === product.id);
-    console.log(index);
-    console.log(cart);
     if (index === -1) {
       setCart([...cart, { ...product, quantity: 1 }]);
     } else {
@@ -105,16 +108,12 @@ function ProductProvider({ children }) {
           x.id === product.id ? { ...product, quantity: x.quantity + 1 } : x
         )
       );
-
-      console.log(product.quantity);
     }
   };
 
   const handleUpdateCartQty = (product, quantity) => {
     const exist = cart.find((x) => x.id === product.id);
-    console.log(exist);
-    console.log(cart);
-    console.log(exist.quantity);
+
     if (exist) {
       setCart(
         cart.map((x) =>
@@ -125,7 +124,6 @@ function ProductProvider({ children }) {
       );
       handlePrice();
       handleTotalCart();
-      console.log(exist.quantity);
       if (exist.quantity === 0) {
         handleRemoveFromCart(product.id);
       }
@@ -147,35 +145,87 @@ function ProductProvider({ children }) {
   };
 
   const handlePrice = () => {
-    // let sum = 0;
-    // cart.map((item) => (sum += item.quantity * item.price));
     const totalPrice = cart.reduce(
       (acc, item) => acc + item.quantity * item.price,
       0
     );
     setPrice(totalPrice);
   };
-  const handleTotalCart = (num) => {
-    console.log(cart);
+  const handleTotalCart = () => {
     const total = cart.reduce((acc, item) => {
-      console.log("Item quantity:", item.quantity);
-      console.log("acc: ", acc);
-
       return acc + item.quantity;
     }, 0);
     setTotalCart(total);
-
-    console.log("Total Cart", total);
   };
 
   //#endregion
 
+  //# User Orders
+  const getLastOrderId = () => {
+    if (userOrders === null || userOrders.length === 0) {
+      return 0;
+    } else {
+      let lastItemInArry = userOrders.length;
+
+      return lastItemInArry;
+    }
+  };
+
+  const collectProductsName = () => {
+    let namesArr = [];
+    for (var i = 0; i < cart.length; i++) {
+      namesArr.push(cart[i].productName);
+    }
+    return namesArr;
+  };
+
+  function subtotal() {
+    const total = cart.reduce((acc, item) => {
+      return acc + item.price * item.quantity;
+    }, 0);
+    return total;
+  }
+
+  const handleCheckout = () => {
+    let orderIdGen = `ABC-OI-${getLastOrderId()}`;
+    let userDetails = details;
+    let productsNameArr = collectProductsName();
+    let totalCart = subtotal();
+
+    let newOrder = {
+      orderId: orderIdGen,
+      userName: userDetails.name,
+      userEmail: userDetails.email,
+      productsNameArr: productsNameArr,
+      totalCart: totalCart,
+      payment: "waiting",
+    };
+    setUserOrders((prev) => [...prev, newOrder]);
+  };
+
   localStorage.setItem("products", JSON.stringify(products));
+  localStorage.setItem(
+    "UserCart",
+    JSON.stringify([{ userId: details.id, cart: cart }])
+  );
+
+  const setLoggedInUserCart = () => {
+    let userCart = localStorage.getItem("UserCart");
+    let parsedUserCart = JSON.parse(userCart);
+    console.log(parsedUserCart);
+    // if (parsedUserCart === [{ userId: "", cart: [] }]);
+    // else {
+    //   setCart(parsedUserCart.cart);
+    // }
+  };
 
   useEffect(() => {
     fetchProducts();
     handlePrice();
     handleTotalCart();
+    handleCheckout();
+    console.log(userOrders);
+    setLoggedInUserCart();
   }, []);
 
   return (
@@ -194,6 +244,10 @@ function ProductProvider({ children }) {
         deleteProduct,
         addProduct,
         changeProduct,
+        handleCheckout,
+        userOrders,
+        setUserOrders,
+        setLoggedInUserCart,
       }}
     >
       {children}

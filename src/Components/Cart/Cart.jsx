@@ -9,9 +9,9 @@ import { UserContext } from "../Login/UserContext";
 const Cart = () => {
   const classes = useStyles();
   const { cart } = useContext(ProductsContext);
-  const { handleRemoveFromCart } = useContext(ProductsContext);
-  const { handleEmptyCart } = useContext(ProductsContext);
-  const { handleUpdateCartQty } = useContext(ProductsContext);
+  const { handleRemoveFromCart, handleEmptyCart, handleUpdateCartQty } =
+    useContext(ProductsContext);
+  const { handleCheckout } = useContext(ProductsContext);
   const { isLoggedIn } = useContext(UserContext);
   const [error, setError] = useState("");
   const [price, setPrice] = useState(0);
@@ -76,6 +76,7 @@ const Cart = () => {
               className={classes.checkoutButton}
               component={Link}
               to="/checkout"
+              onClick={handleCheckout}
               size="large"
               type="button"
               variant="contained"

@@ -2,10 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import UserProvider from "./Components/Login/UserContext";
+import ProductProvider from "./Components/Products/Context/ProductsContext";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <UserProvider>
+      <ProductProvider>
+        <App />
+      </ProductProvider>
+    </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

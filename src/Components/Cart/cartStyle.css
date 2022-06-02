@@ -1,0 +1,54 @@
+.orders__contant{
+    
+    display: grid;
+    flex-direction: column;
+    gap: 1%;
+    height:100% ;
+    padding:5.5rem;
+    overflow: hidden;
+    flex-grow: 1;
+    align-items: center;
+    padding-top: 8rem;
+    align-content: center;
+    justify-items: center;
+}
+
+.orders__contant table{
+    background-color: var(--color-white);
+    border-collapse: collapse;
+    color: black;
+    border-radius: 0.5rem;
+    width: 99%;
+    margin: 6px ;
+}
+
+.orders__contant td, th {
+    border: 1.5px solid #dddddd;
+    border-radius: 0.5rem;
+  text-align: left;
+  padding: 4px;
+}
+
+.orders__contant h2{
+    margin-bottom: 1rem;
+}
+
+.total__table{
+padding-top: 1rem;
+margin-bottom: 1rem;
+position: relative;
+left: 432%;
+}
+
+.MuiTableHead-root{
+    background-color:darkgray;
+    color: white;
+}
+
+.approved {
+background-color: rgb(4, 159, 4);
+}
+
+.waiting{
+background-color: orange;
+}

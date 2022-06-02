@@ -11,7 +11,7 @@ function LoginForm({ setIsOpen }) {
   const { error, setError } = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const { userName, setUser } = useContext(UserContext);
-  const { login } = useContext(UserContext);
+  const { auth } = useContext(UserContext);
   const { isAdmin, setAdmin } = useContext(UserContext);
   const [passwordShown, setPasswordShown] = useState(false);
   const { state } = useLocation();
@@ -27,8 +27,7 @@ function LoginForm({ setIsOpen }) {
   };
 
   const onLogin = async () => {
-    
-    const body = await login(details.email, details.password);
+    const body = await auth(details.email, details.password);
 
     if (body.length === 1) {
       setDetails({

@@ -47,3 +47,8 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 12.5rem ;
   }
+
+  .btn-payment{
+    width: 86px;
+    left: 67%;
+  }
