@@ -20,7 +20,7 @@ export default function AlertDialog({ open, setClose, handleOperation, text }) {
         aria-labelledby="Alert-Dialog"
         aria-describedby="Befor-Action"
       >
-        <DialogTitle id="alert-dialog-title">{"Logout"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"Message"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {text}
