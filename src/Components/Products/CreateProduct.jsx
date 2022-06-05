@@ -23,7 +23,7 @@ const CreateProduct = () => {
 
   const [isPending, setIsPending] = useState(false);
   const history = useHistory();
-  const [isDialogOpen, seIsDialog] = useState(true);
+  const [isDialogOpen, seIsDialog] = useState(false);
 
   const handleTagsOnChange = (item) => {
     const exist = newProduct.tags.find((x) => x === item);
@@ -43,27 +43,30 @@ const CreateProduct = () => {
   };
   const DialogClose = () => {
     seIsDialog(false);
+    history.push("/products");
   };
 
-  const dialogText = "";
+  const handleDialogOperation = () => {
+    fetchPostProduct(newProduct)
+    history.push("/products");
+
+  }
+
+  const dialogText = "Do you want to update the Server? ";
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    <AlertDialog
-      open={isDialogOpen}
-      setClose={DialogClose}
-      text={dialogText}
-      handleOperation={fetchPostProduct(newProduct)}
-    />;
+    seIsDialog(true)
     addProduct(newProduct);
     setIsPending(true);
 
-    history.push("/products");
   };
   return (
     <div className="container create">
+      
       <h2> Add a new Product</h2>
+     
       <form onSubmit={handleSubmit}>
         <label> Product title:</label>
         <textarea
@@ -131,6 +134,12 @@ const CreateProduct = () => {
         )}
         {isPending && <button disabled>Adding Product.. </button>}
       </form>
+      <AlertDialog
+      open={isDialogOpen}
+      setClose={DialogClose}
+      text={dialogText}
+      handleOperation={handleDialogOperation}
+    />
       <div className="grid__product">
         <Product product={newProduct} isAdmin={false} />
       </div>

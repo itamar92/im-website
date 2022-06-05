@@ -25,6 +25,7 @@
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "^5.0.1",
     "react-soundplayer": "^1.0.5",
+    "react-toastify": "^9.0.3",
     "redux-devtools-extension": "^2.13.9",
     "web-vitals": "^0.2.4"
   },

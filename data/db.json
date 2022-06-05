@@ -90,34 +90,6 @@
       "url": "https://soundcloud.com/itamarmiron/happy-coporate?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing",
       "src": "/Music/Happy Coporaits.mp3",
       "image": "/Image/Logo_IM icon Black.png"
-    },
-    {
-      "productName": "new song",
-      "description": "cool",
-      "tags": [
-        "funky",
-        "Coporate"
-      ],
-      "composer": "Itamar Miron",
-      "price": "10",
-      "quantity": 0,
-      "src": "/Music/Sonokinetic Competition - Itamar Miron.mp3",
-      "image": "/Image/Logo_IM icon Black.png",
-      "id": 5
-    },
-    {
-      "productName": "new Song 2",
-      "description": "cool song",
-      "tags": [
-        "funky",
-        "Coporate"
-      ],
-      "composer": "Itamar Miron",
-      "price": "10",
-      "quantity": 0,
-      "src": "/Music/Sonokinetic Competition - Itamar Miron.mp3",
-      "image": "/Image/Logo_IM icon Black.png",
-      "id": 6
     }
   ]
 }

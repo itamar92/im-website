@@ -1,23 +1,16 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  Typography,
-  List,
-  ListItem,
-  Button,
-  Snackbar,
-} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { Typography, List, ListItem, Button } from "@material-ui/core";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { ProductsContext } from "../../Context/ProductsContext";
-import MuiAlert from "@mui/material/Alert";
 import "./Checkout.css";
 
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
 const Review = () => {
-  const { cart } = useContext(ProductsContext);
+  const { cart, handleEmptyCart } = useContext(ProductsContext);
   const [price, setPrice] = useState(0);
-  const [open, setOpen] = useState(false);
+
+  const history = useHistory();
 
   const getTotalPrice = () => {
     let sum = 0;
@@ -25,16 +18,22 @@ const Review = () => {
     setPrice(sum);
   };
 
-  const handleClick = () => {
-    setOpen(true);
+  const notifySuccess = () => {
+    toast.success("Payment Success!", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
+  const handleClick = () => {
+    notifySuccess();
+    handleEmptyCart();
+    setTimeout(() => history.push("/"), 2000);
   };
 
   useEffect(() => {
@@ -70,6 +69,14 @@ const Review = () => {
         <Typography className="checkout__cards" style={{ padding: "10px 0" }}>
           <Typography>Total</Typography>
           <Typography style={{ fontWeight: 700 }}>${price}</Typography>
+          <ToastContainer
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            rtl={false}
+            pauseOnFocusLoss={false}
+          />
           <Button
             className="btn-payment"
             size="small"
@@ -80,20 +87,6 @@ const Review = () => {
           >
             Payment
           </Button>
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            open={open}
-            autoHideDuration={4000}
-            onClose={handleClose}
-          >
-            <Alert
-              onClose={handleClose}
-              severity="success"
-              sx={{ width: "100%" }}
-            >
-              Payment Success!
-            </Alert>
-          </Snackbar>
         </Typography>
       </List>
     </div>

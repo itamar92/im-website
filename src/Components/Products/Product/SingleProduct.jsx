@@ -14,20 +14,10 @@ const SingleProduct = () => {
   useEffect(() => {
     if (!id) return null;
     let productFilter = products.find((item) => item.id === parseInt(id));
-    console.log("product Filter: ", productFilter);
-    console.log("products: ", products);
 
     setProductToShow(productFilter);
     setIsLoading(false);
-    // console.log("type of id :", typeof id);
-
-    // console.log("product id to show: ", id);
   }, [id]);
-
-  // console.log("product to show: ", productToShow);
-  // const productToShow = products.filter((product) => {
-  //   return product.id === id;
-  // });
 
   return (
     <section id="products" style={{ marginBottom: "1rem" }}>

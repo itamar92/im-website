@@ -1,11 +1,13 @@
 import { useState, useContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { ProductsContext } from "../../Context/ProductsContext";
+import AlertDialog from "../AlertDialog";
 import Product from "./Product/Product";
 
 const EditProduct = () => {
   let { id } = useParams();
-  const { changeProduct, products } = useContext(ProductsContext);
+  const { changeProduct, products, fetchPostProduct } =
+    useContext(ProductsContext);
 
   const [updateProduct, setUpdateProduct] = useState();
 
@@ -20,17 +22,26 @@ const EditProduct = () => {
   ];
 
   const [isPending, setIsPending] = useState(false);
+  const [isDialogOpen, seIsDialog] = useState(false);
   const history = useHistory();
 
+  const DialogClose = () => {
+    seIsDialog(false);
+    history.push("/products");
+  };
+
+  const handleDialogOperation = () => {
+    fetchPostProduct(updateProduct);
+    history.push("/products");
+  };
+
+  const dialogText = "Do you want to update the Server? ";
+
   useEffect(() => {
-    console.log(products);
-    console.log(id);
     let filteredProduct = products.filter((item) => {
-      console.log(item);
       return item.id === parseInt(id);
     });
 
-    console.log(filteredProduct);
     if (filteredProduct !== undefined && filteredProduct.length !== 0) {
       setUpdateProduct({
         id: filteredProduct[0].id,
@@ -45,7 +56,6 @@ const EditProduct = () => {
       });
     }
   }, [id, products]);
-
 
   const handleTagsOnChange = (item) => {
     const exist = updateProduct.tags.find((x) => x === item);
@@ -67,10 +77,9 @@ const EditProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    seIsDialog(true);
     changeProduct(updateProduct);
     setIsPending(true);
-
-    history.push("/products");
   };
   return (
     <div className="container create">
@@ -136,7 +145,13 @@ const EditProduct = () => {
         )}
         {isPending && <button disabled>Adding Product.. </button>}
       </form>
-
+      <AlertDialog
+        open={isDialogOpen}
+        setClose={DialogClose}
+        text={dialogText}
+        handleOperation={handleDialogOperation}
+      />
+      
       {updateProduct && (
         <div className="grid__product">
           <Product product={updateProduct} isAdmin={false} />

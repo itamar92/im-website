@@ -42,7 +42,7 @@ const SearchBar = ({ data }) => {
           />
         )}
         onChange={(e, obj) => {
-          history.push(`/product/${obj.id}`);
+         {return history.push(`/product/${obj.id}`), setSearchFilter('')};
         }}
       />
     </div>

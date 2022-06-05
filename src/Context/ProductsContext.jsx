@@ -27,17 +27,17 @@ function ProductProvider({ children }) {
     }
   };
 
-const fetchPostProduct = async (newProduct) => {
-  fetch("http://localhost:5000/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProduct),
-      })
-        .then((res) => {
-          alert("File Upload success");
-        })
-        .catch((err) => alert("File Upload Error"));
-}
+  const fetchPostProduct = async (newProduct) => {
+    fetch("http://localhost:5000/products", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newProduct),
+    });
+    // .then((res) => {
+    //   alert("File Upload success");
+    // })
+    // .catch((err) => alert("File Upload Error"));
+  };
   //#region Add/Change Product
   const addProduct = (newItem) => {
     let newProduct = {
@@ -49,19 +49,6 @@ const fetchPostProduct = async (newProduct) => {
     arr.push(newItem);
     localStorage.setItem("products", JSON.stringify(arr));
     setProducts((prev) => [...prev, newProduct]);
-    
-
-    // if (window.confirm("Do you want to upload to the server?")) {
-    //   fetch("http://localhost:5000/products", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(newProduct),
-    //   })
-    //     .then((res) => {
-    //       alert("File Upload success");
-    //     })
-    //     .catch((err) => alert("File Upload Error"));
-    // }
   };
 
   const changeProduct = (updateItem) => {
@@ -78,18 +65,6 @@ const fetchPostProduct = async (newProduct) => {
     let arr = JSON.parse(p);
     arr.push(updateItem);
     localStorage.setItem("products", JSON.stringify(products));
-
-    // if (window.confirm("Do you want to upload to the server?")) {
-    //   fetch("http://localhost:5000/products", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(updateProduct),
-    //   })
-    //     .then((res) => {
-    //       alert("File Upload success");
-    //     })
-    //     .catch((err) => alert("File Upload Error"));
-    // }
   };
 
   const deleteProduct = (id) => {
@@ -115,12 +90,16 @@ const fetchPostProduct = async (newProduct) => {
     let index = cart.findIndex((x) => x.id === product.id);
     if (index === -1) {
       setCart([...cart, { ...product, quantity: 1 }]);
-    } else {
-      setCart(
-        cart.map((x) =>
-          x.id === product.id ? { ...product, quantity: x.quantity + 1 } : x
-        )
+      localStorage.setItem(
+        "UserCart",
+        JSON.stringify([...cart, { ...product, quantity: 1 }])
       );
+    } else {
+      const newArrInCart = cart.map((x) =>
+        x.id === product.id ? { ...product, quantity: x.quantity + 1 } : x
+      );
+      setCart(newArrInCart);
+      localStorage.setItem("UserCart", JSON.stringify(newArrInCart));
     }
   };
 
@@ -143,6 +122,7 @@ const fetchPostProduct = async (newProduct) => {
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
+    localStorage.setItem("UserCart", JSON.stringify(cart));
   };
 
   const handleRemoveFromCart = (id) => {
@@ -150,11 +130,13 @@ const fetchPostProduct = async (newProduct) => {
     setCart(arr);
     handlePrice();
     handleTotalCart();
+    localStorage.setItem("UserCart", JSON.stringify(arr));
   };
 
   const handleEmptyCart = () => {
     setCart([]);
     handleTotalCart();
+    localStorage.setItem("UserCart", JSON.stringify([]));
   };
 
   const handlePrice = () => {
@@ -214,32 +196,31 @@ const fetchPostProduct = async (newProduct) => {
       payment: "waiting",
     };
     setUserOrders((prev) => [...prev, newOrder]);
+    
   };
 
   //#endregion
 
-  localStorage.setItem("products", JSON.stringify(products));
-  localStorage.setItem("UserCart", JSON.stringify(cart));
-
-  useEffect(() => {
-    localStorage.setItem("UserCart", JSON.stringify(cart));
-  }, [cart]);
-
   const setLoggedInUserCart = () => {
+    const userLogin = JSON.parse(localStorage.getItem("login"));
     const userCart = JSON.parse(localStorage.getItem("UserCart"));
-    if (userCart === []) return setCart([]);
-    else setCart(userCart);
+    if (userLogin === true) userCart.length && setCart(userCart);
   };
 
   const setLoggedOutUserCart = () => {
     const userLogin = JSON.parse(localStorage.getItem("login"));
     if (userLogin === false) {
       localStorage.setItem("UserCart", JSON.stringify([]));
+      setCart([]);
     }
   };
 
+  localStorage.setItem("products", JSON.stringify(products));
+
   useEffect(() => {
     setLoggedInUserCart();
+    const userCart = JSON.parse(localStorage.getItem("UserCart"));
+    setCart(userCart);
   }, [setLogout]);
 
   useEffect(() => {

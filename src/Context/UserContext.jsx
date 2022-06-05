@@ -57,7 +57,7 @@ function UserProvider({ children }) {
     setUser("");
     setIsLoggedIn(false);
     setAdmin(false);
-    // localStorage.setItem("UserCart", JSON.stringify([]));
+    localStorage.setItem("UserCart", JSON.stringify([]));
   };
 
   return (

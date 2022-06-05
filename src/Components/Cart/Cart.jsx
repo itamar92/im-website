@@ -22,9 +22,11 @@ const Cart = () => {
     setPrice(sum);
   };
 
-  const handleCheckoutClick = () => {
+  const handleNotLogin = () => {
     setError("You need to Sign in First");
   };
+
+
 
   useEffect(() => {
     getTotalPrice();
@@ -82,19 +84,19 @@ const Cart = () => {
               variant="contained"
               color="primary"
             >
-              Checkout
+              Place Order
             </Button>
           ) : (
             <>
               <Button
                 className={classes.checkoutButton}
-                onClick={handleCheckoutClick}
+                onClick={handleNotLogin}
                 size="large"
                 type="button"
                 variant="contained"
                 color="primary"
               >
-                Checkout
+                Place Order
               </Button>
             </>
           )}
