@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "./navbar.css";
 
 const SearchBar = ({ data }) => {
-  let history = useHistory();
+ const history = useHistory(); 
   const [searchFilter, setSearchFilter] = useState([]);
 
   return (
@@ -42,7 +42,6 @@ const SearchBar = ({ data }) => {
           />
         )}
         onChange={(e, obj) => {
-          console.log(obj);
           history.push(`/product/${obj.id}`);
         }}
       />

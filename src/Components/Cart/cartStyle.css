@@ -1,10 +1,15 @@
+.Cart__Contant{
+    padding-top: 5rem;
+    padding-bottom: 13rem;
+}
+
 .orders__contant{
-    
     display: grid;
     flex-direction: column;
     gap: 1%;
     height:100% ;
     padding:5.5rem;
+    padding-bottom: 13rem;
     overflow: hidden;
     flex-grow: 1;
     align-items: center;
@@ -14,7 +19,6 @@
 }
 
 .orders__contant table{
-    background-color: var(--color-white);
     border-collapse: collapse;
     color: black;
     border-radius: 0.5rem;

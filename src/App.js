@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext, useEffect } from "react";
+import React, {  useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Header from "./Components/Header/Header";
@@ -15,18 +15,18 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import LoginPermission from "./Components/Login/LoginPermission";
 import CreateProduct from "./Components/Products/CreateProduct";
 import EditProduct from "./Components/Products/EditProduct";
-import { UserContext } from "./Components/Login/UserContext";
-import { ProductsContext } from "./Components/Products/Context/ProductsContext";
+import { UserContext } from "./Context/UserContext";
+import { ProductsContext } from "./Context/ProductsContext";
 
 function App() {
-  const { setLoggedInUser, details } = useContext(UserContext);
-  const { setLoggedInUserCart, cart } = useContext(ProductsContext);
+  const { setLoggedInUser } = useContext(UserContext);
+  const { setLoggedOutUserCart, setLoggedInUserCart } =
+    useContext(ProductsContext);
 
   useEffect(() => {
     setLoggedInUser();
-    console.log(details);
     setLoggedInUserCart();
-    console.log(cart);
+    setLoggedOutUserCart();
   }, []);
 
   return (
@@ -51,23 +51,23 @@ function App() {
             <Cart />
           </Route>
 
-          <ProtectedRoute path="/checkout">
+          <ProtectedRoute  path="/checkout">
             <Checkout />
           </ProtectedRoute>
 
           <Route exact path="/about">
             <About />
           </Route>
-          <ProtectedRoute path="/orderslist">
+          <ProtectedRoute checkAdmin path="/orderslist">
             <OrdersList />
-          </ProtectedRoute>
-          <Route path="/createproduct">
+          </ProtectedRoute >
+          <ProtectedRoute checkAdmin path="/createproduct">
             <CreateProduct />
-          </Route>
-          <Route path="/editproduct/:id">
+          </ProtectedRoute>
+           <ProtectedRoute checkAdmin path="/editproduct/:id">
             <EditProduct />
-          </Route>
-          <Route path="/loginpermission">
+          </ProtectedRoute>
+          <Route path="/login-permission">
             <LoginPermission />
           </Route>
           <Route path="/*">

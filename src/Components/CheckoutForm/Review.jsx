@@ -6,7 +6,7 @@ import {
   Button,
   Snackbar,
 } from "@material-ui/core";
-import { ProductsContext } from "../../Components/Products/Context/ProductsContext";
+import { ProductsContext } from "../../Context/ProductsContext";
 import MuiAlert from "@mui/material/Alert";
 import "./Checkout.css";
 
@@ -16,8 +16,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const Review = () => {
   const { cart } = useContext(ProductsContext);
-  // const { price } = useContext(ProductsContext);
-  // console.log(cart);
   const [price, setPrice] = useState(0);
   const [open, setOpen] = useState(false);
 

@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { ProductsContext } from "./Context/ProductsContext";
-import FileUploader from "./FileUploader";
+import { ProductsContext } from "../../Context/ProductsContext";
 import Product from "./Product/Product";
 
 const EditProduct = () => {
@@ -33,7 +32,6 @@ const EditProduct = () => {
 
     console.log(filteredProduct);
     if (filteredProduct !== undefined && filteredProduct.length !== 0) {
-      console.log("yaii");
       setUpdateProduct({
         id: filteredProduct[0].id,
         productName: filteredProduct[0].productName,
@@ -48,26 +46,19 @@ const EditProduct = () => {
     }
   }, [id, products]);
 
-  // console.log(updateProduct);
-  // console.log(UpdateProduct.productName);
 
   const handleTagsOnChange = (item) => {
     const exist = updateProduct.tags.find((x) => x === item);
-    console.log(exist);
     if (!exist) {
       setUpdateProduct((prev) => {
         let x = { ...prev, tags: [...prev.tags, item] };
-        console.log(x);
         return x;
       });
     } else {
       let index = updateProduct.tags.indexOf(exist);
-      console.log(index);
       const filterTag = updateProduct.tags.filter((x) => x === !x[index]);
       setUpdateProduct((prev) => {
         let x = { ...prev, tags: filterTag };
-        console.log(x);
-        console.log(filterTag);
         return x;
       });
     }
@@ -77,7 +68,6 @@ const EditProduct = () => {
     e.preventDefault();
 
     changeProduct(updateProduct);
-    console.log("product Updated");
     setIsPending(true);
 
     history.push("/products");
@@ -140,11 +130,6 @@ const EditProduct = () => {
           />
           <label>$</label>
         </div>
-
-        {/* <FileUploader
-          onFileSelectSuccess={(file) => setSelectedFile(file)}
-          onFileSelectError={({ error }) => alert(error)}
-        /> */}
 
         {!isPending && (
           <button className="btn btn-primary"> Update Product</button>

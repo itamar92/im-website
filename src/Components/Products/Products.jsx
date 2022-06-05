@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
 import "./products.css";
 import Product from "./Product/Product";
-import { ProductsContext } from "./Context/ProductsContext";
-import { UserContext } from "../Login/UserContext";
+import { ProductsContext } from "../../Context/ProductsContext";
+import { UserContext } from "../../Context/UserContext";
 import AddIcon from "@mui/icons-material/Add";
-import { IconButton, Button } from "@material-ui/core";
+import {  Button } from "@material-ui/core";
 
 const Products = () => {
   const { products } = useContext(ProductsContext);

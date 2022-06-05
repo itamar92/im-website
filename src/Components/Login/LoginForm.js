@@ -1,20 +1,16 @@
-import React from "react";
-import { useState, useContext, useEffect } from "react";
-import {
-  Redirect,
-  useLocation,
-} from "react-router-dom/cjs/react-router-dom.min";
-import { UserContext } from "./UserContext";
+import React, { useState, useContext, useEffect } from "react";
+import { UserContext } from "../../Context/UserContext";
+import AlertDialog from "../AlertDialog";
 
 function LoginForm({ setIsOpen }) {
   const { details, setDetails } = useContext(UserContext);
   const { error, setError } = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
   const { userName, setUser } = useContext(UserContext);
-  const { auth } = useContext(UserContext);
+  const { auth, setLogout } = useContext(UserContext);
   const { isAdmin, setAdmin } = useContext(UserContext);
   const [passwordShown, setPasswordShown] = useState(false);
-  const { state } = useLocation();
+  const [isDialogOpen, seIsDialog] = useState(true);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -39,42 +35,36 @@ function LoginForm({ setIsOpen }) {
       setUser(body[0].name);
       setIsOpen(false);
       if (body[0].role === "admin") setAdmin(true);
-      <Redirect to={state?.from || "/"} />;
     } else {
       setError("Details not match!");
     }
   };
 
-  const onLogout = () => {
-    setDetails({ name: "", email: "", password: "" });
-    setUser("");
-    setIsLoggedIn(false);
+
+
+  const DialogClose = () => {
+    seIsDialog(false);
     setIsOpen(false);
-    setAdmin(false);
   };
 
   useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(userName));
+    localStorage.setItem("userName", JSON.stringify(userName));
     localStorage.setItem("admin", JSON.stringify(isAdmin));
   }, [userName]);
 
-  let localUser = localStorage.getItem("user");
+  let localUser = localStorage.getItem("userName");
   if (localUser === "") setIsLoggedIn(false);
+
+  const LogoutText = "Are you sure you want to Logout?";
 
   if (isLoggedIn)
     return (
-      <form>
-        <div className="form-inner">
-          <h2>Logout?</h2>
-          <input
-            type="submit"
-            name="submit"
-            id="submit"
-            onClick={onLogout}
-            value="Logout"
-          />
-        </div>
-      </form>
+      <AlertDialog
+        open={isDialogOpen}
+        setClose={DialogClose}
+        text={LogoutText}
+        handleOperation={setLogout}
+      />
     );
   return (
     <form onSubmit={submitHandler}>
@@ -90,6 +80,7 @@ function LoginForm({ setIsOpen }) {
             id="email"
             onChange={(e) => setDetails({ ...details, email: e.target.value })}
             value={details.email}
+            maxLength={24}
             required
           />
         </div>
@@ -103,6 +94,7 @@ function LoginForm({ setIsOpen }) {
               setDetails({ ...details, password: e.target.value })
             }
             value={details.password}
+            maxLength={15}
             required
           />
           <button className="btn__psw" onClick={togglePassword}>

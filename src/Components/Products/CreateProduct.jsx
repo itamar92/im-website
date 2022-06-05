@@ -1,11 +1,12 @@
 import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { ProductsContext } from "./Context/ProductsContext";
+import { ProductsContext } from "../../Context/ProductsContext";
+import AlertDialog from "../AlertDialog";
 import FileUploader from "./FileUploader";
 import Product from "./Product/Product";
 
 const CreateProduct = () => {
-  const { addProduct } = useContext(ProductsContext);
+  const { addProduct, fetchPostProduct } = useContext(ProductsContext);
   const [newProduct, setNewProduct] = useState({
     productName: "",
     description: "",
@@ -22,34 +23,40 @@ const CreateProduct = () => {
 
   const [isPending, setIsPending] = useState(false);
   const history = useHistory();
+  const [isDialogOpen, seIsDialog] = useState(true);
 
   const handleTagsOnChange = (item) => {
     const exist = newProduct.tags.find((x) => x === item);
-    console.log(exist);
     if (!exist) {
       setNewProduct((prev) => {
         let x = { ...prev, tags: [...prev.tags, item] };
-        console.log(x);
         return x;
       });
     } else {
       let index = newProduct.tags.indexOf(exist);
-      console.log(index);
       const filterTag = newProduct.tags.filter((x) => x === !x[index]);
       setNewProduct((prev) => {
         let x = { ...prev, tags: filterTag };
-        console.log(x);
-        console.log(filterTag);
         return x;
       });
     }
   };
+  const DialogClose = () => {
+    seIsDialog(false);
+  };
+
+  const dialogText = "";
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    <AlertDialog
+      open={isDialogOpen}
+      setClose={DialogClose}
+      text={dialogText}
+      handleOperation={fetchPostProduct(newProduct)}
+    />;
     addProduct(newProduct);
-    console.log("product added");
     setIsPending(true);
 
     history.push("/products");
@@ -91,7 +98,6 @@ const CreateProduct = () => {
                       id={`custom-checkbox-${index}`}
                       value={item}
                       //   defaultChecked={true}
-                      //  checked={checkedState[index]}
                       onChange={() => handleTagsOnChange(item)}
                     />
                     <label htmlFor={`custom-checkbox-${index}`}>{item}</label>

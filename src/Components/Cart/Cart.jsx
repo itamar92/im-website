@@ -3,8 +3,8 @@ import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import CartItem from "./CartItem/CartItem";
 import useStyles from "./cartStyles";
-import { ProductsContext } from "../Products/Context/ProductsContext";
-import { UserContext } from "../Login/UserContext";
+import { ProductsContext } from "../../Context/ProductsContext";
+import { UserContext } from "../../Context/UserContext";
 
 const Cart = () => {
   const classes = useStyles();
@@ -104,7 +104,7 @@ const Cart = () => {
   );
 
   return (
-    <Container>
+    <Container className="Cart__Contant">
       <div className={classes.toolbar} />
       <Typography className={classes.title} variant="h3" gutterBottom>
         Your Shopping Cart

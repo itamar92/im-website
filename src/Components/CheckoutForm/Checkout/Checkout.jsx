@@ -1,13 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import Review from "../Review";
-import { ProductsContext } from "../../Products/Context/ProductsContext";
-import useStyles from "../CheckoutStyles";
 import "../Checkout.css";
 
 const Checkout = () => {
-  const classes = useStyles();
-  const { cart } = useContext(ProductsContext);
-  // const { price } = useContext(ProductsContext);
 
   return (
     <div className="checkout__container">

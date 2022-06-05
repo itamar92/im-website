@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext} from "react";
 import "./cartStyle.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,28 +8,24 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ProductsContext } from "../Products/Context/ProductsContext";
+import { ProductsContext } from "../../Context/ProductsContext";
 import {
   Button as IconButton,
   FormControl,
   InputLabel,
   MenuItem,
-  NativeSelect,
   Select,
 } from "@material-ui/core";
 
 const OrdersList = () => {
   const { userOrders, setUserOrders } = useContext(ProductsContext);
-  const [paymentStatus, setPaymentStatus] = useState(10);
 
-  const TAX_RATE = 0.07;
 
   function ccyFormat(num) {
     return `${num.toFixed(2)}`;
   }
 
   function subtotal() {
-    console.log(userOrders);
     const total = userOrders.reduce((acc, item) => {
       return acc + item.totalCart;
     }, 0);
@@ -39,9 +35,7 @@ const OrdersList = () => {
   const handleRemoveOrder = (id) => {
     let newOrdersArr = userOrders.filter(
       (item) => item.orderId !== id,
-      console.log(id)
     );
-    console.log(newOrdersArr);
     setUserOrders(newOrdersArr);
   };
 
@@ -58,14 +52,7 @@ const OrdersList = () => {
     ]);
   };
 
-  const handlePaymentClick = (id) => {
-    console.log("test", paymentStatus);
-  };
-  // useEffect(() => {
-  //   console.log(userOrders);
-  // }, [userOrders]);
-
-  const invoiceSubtotal = subtotal();
+ 
 
   return (
     <div className="orders__contant">
@@ -125,7 +112,7 @@ const OrdersList = () => {
               <TableRow>
                 <TableCell rowSpan={3} />
                 <TableCell colSpan={3}>Subtotal</TableCell>
-                <TableCell>{ccyFormat(invoiceSubtotal)}$</TableCell>
+                <TableCell>{ccyFormat(subtotal())}$</TableCell>
               </TableRow>
             </div>
           </TableBody>

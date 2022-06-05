@@ -1,22 +1,27 @@
-import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { Redirect, Route } from "react-router-dom/cjs/react-router-dom.min";
-import { UserContext } from "./Login/UserContext";
+import { Redirect, Route } from "react-router-dom";
+import { UserContext } from "../Context/UserContext";
 
-function ProtectedRoute({ children, ...rest }) {
-  const { isLoggedIn } = useContext(UserContext);
-  console.log(isLoggedIn);
+function ProtectedRoute({ children, checkAdmin, ...rest }) {
+  const { isLoggedIn, isAdmin } = useContext(UserContext);
+
+  const redirect = (from, to) => {
+    console.log(from, to);
+    return <Redirect to={{ pathname: to, state: { from } }} />;
+  };
+
+  const handleAdmin = (location) => {
+    return isAdmin ? children : redirect(location, "/");
+  };
   return (
     <Route
       {...rest}
       render={({ location }) => {
-        return isLoggedIn === true ? (
-          children
-        ) : (
-          <Redirect
-            to={{ pathname: "/loginpermission", state: { from: location } }}
-          />
-        );
+        return isLoggedIn
+          ? checkAdmin
+            ? handleAdmin(location)
+            : children
+          : redirect(location, "/login-permission");
       }}
     />
   );

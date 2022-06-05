@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useTheme } from "@mui/material/styles";
 import {
   Card,
   CardMedia,
@@ -14,13 +13,10 @@ import {
 import AudioPlayer from "material-ui-audio-player";
 import { AddShoppingCart } from "@material-ui/icons";
 import useStyles from "./productStyles";
-import { ProductsContext } from "../Context/ProductsContext";
 import "../products.css";
-import EditProduct from "../EditProduct";
 
 const Product = ({ product, onAddToCart, isAdmin, deleteProduct }) => {
   const classes = useStyles();
-  const theme = useTheme();
 
   const handleDelete = (id) => {
     deleteProduct(id);

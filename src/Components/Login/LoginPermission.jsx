@@ -1,18 +1,22 @@
 import { useState, useContext } from "react";
-import { Redirect } from "react-router-dom";
 import { useLocation, useHistory } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import Portalpage from "./Portalpage";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../../Context/UserContext";
 
 const LoginPermission = () => {
-  const { isLoggedin } = useContext(UserContext);
+  const { isLoggedIn,isAdmin } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const { state } = useLocation();
 
   const history = useHistory();
+  if (isLoggedIn) 
+  {
+    history.push(state.from.pathname);
+    return <></>;
+  }
 
-  if (isLoggedin) return history.push("/");
+  if(!isAdmin) 
 
   return (
     <div style={{ padding: "120px", fontSize: "30px" }}>

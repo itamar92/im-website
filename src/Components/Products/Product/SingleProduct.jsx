@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "../products.css";
 import { useParams } from "react-router-dom";
 import Product from "./Product";
-import { ProductsContext } from "../Context/ProductsContext";
+import { ProductsContext } from "../../../Context/ProductsContext";
 
 const SingleProduct = () => {
   const { products, handleAddToCart } = useContext(ProductsContext);

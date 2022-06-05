@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from "react";
-import { UserContext } from "../../Login/UserContext";
+import { UserContext } from "./UserContext";
 
 export const ProductsContext = createContext();
 
@@ -11,7 +11,7 @@ function ProductProvider({ children }) {
   const [price, setPrice] = useState(0);
   const [userOrders, setUserOrders] = useState([]);
 
-  const { details, fetchUser } = useContext(UserContext);
+  const { details, setLogout } = useContext(UserContext);
 
   // fetching products from data
   const fetchProducts = async () => {
@@ -26,6 +26,18 @@ function ProductProvider({ children }) {
       setError("No items");
     }
   };
+
+const fetchPostProduct = async (newProduct) => {
+  fetch("http://localhost:5000/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      })
+        .then((res) => {
+          alert("File Upload success");
+        })
+        .catch((err) => alert("File Upload Error"));
+}
   //#region Add/Change Product
   const addProduct = (newItem) => {
     let newProduct = {
@@ -37,18 +49,19 @@ function ProductProvider({ children }) {
     arr.push(newItem);
     localStorage.setItem("products", JSON.stringify(arr));
     setProducts((prev) => [...prev, newProduct]);
+    
 
-    if (window.confirm("Do you want to upload to the server?")) {
-      fetch("http://localhost:5000/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProduct),
-      })
-        .then((res) => {
-          alert("File Upload success");
-        })
-        .catch((err) => alert("File Upload Error"));
-    }
+    // if (window.confirm("Do you want to upload to the server?")) {
+    //   fetch("http://localhost:5000/products", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(newProduct),
+    //   })
+    //     .then((res) => {
+    //       alert("File Upload success");
+    //     })
+    //     .catch((err) => alert("File Upload Error"));
+    // }
   };
 
   const changeProduct = (updateItem) => {
@@ -66,17 +79,17 @@ function ProductProvider({ children }) {
     arr.push(updateItem);
     localStorage.setItem("products", JSON.stringify(products));
 
-    if (window.confirm("Do you want to upload to the server?")) {
-      fetch("http://localhost:5000/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updateProduct),
-      })
-        .then((res) => {
-          alert("File Upload success");
-        })
-        .catch((err) => alert("File Upload Error"));
-    }
+    // if (window.confirm("Do you want to upload to the server?")) {
+    //   fetch("http://localhost:5000/products", {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(updateProduct),
+    //   })
+    //     .then((res) => {
+    //       alert("File Upload success");
+    //     })
+    //     .catch((err) => alert("File Upload Error"));
+    // }
   };
 
   const deleteProduct = (id) => {
@@ -160,7 +173,7 @@ function ProductProvider({ children }) {
 
   //#endregion
 
-  //# User Orders
+  //#region User Orders
   const getLastOrderId = () => {
     if (userOrders === null || userOrders.length === 0) {
       return 0;
@@ -203,29 +216,37 @@ function ProductProvider({ children }) {
     setUserOrders((prev) => [...prev, newOrder]);
   };
 
+  //#endregion
+
   localStorage.setItem("products", JSON.stringify(products));
-  localStorage.setItem(
-    "UserCart",
-    JSON.stringify([{ userId: details.id, cart: cart }])
-  );
+  localStorage.setItem("UserCart", JSON.stringify(cart));
+
+  useEffect(() => {
+    localStorage.setItem("UserCart", JSON.stringify(cart));
+  }, [cart]);
 
   const setLoggedInUserCart = () => {
-    let userCart = localStorage.getItem("UserCart");
-    let parsedUserCart = JSON.parse(userCart);
-    console.log(parsedUserCart);
-    // if (parsedUserCart === [{ userId: "", cart: [] }]);
-    // else {
-    //   setCart(parsedUserCart.cart);
-    // }
+    const userCart = JSON.parse(localStorage.getItem("UserCart"));
+    if (userCart === []) return setCart([]);
+    else setCart(userCart);
   };
+
+  const setLoggedOutUserCart = () => {
+    const userLogin = JSON.parse(localStorage.getItem("login"));
+    if (userLogin === false) {
+      localStorage.setItem("UserCart", JSON.stringify([]));
+    }
+  };
+
+  useEffect(() => {
+    setLoggedInUserCart();
+  }, [setLogout]);
 
   useEffect(() => {
     fetchProducts();
     handlePrice();
     handleTotalCart();
     handleCheckout();
-    console.log(userOrders);
-    setLoggedInUserCart();
   }, []);
 
   return (
@@ -248,6 +269,8 @@ function ProductProvider({ children }) {
         userOrders,
         setUserOrders,
         setLoggedInUserCart,
+        setLoggedOutUserCart,
+        fetchPostProduct,
       }}
     >
       {children}

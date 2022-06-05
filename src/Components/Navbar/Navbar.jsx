@@ -9,9 +9,8 @@ import { ShoppingCart } from "@material-ui/icons";
 import useStyles from "./navbarStyles";
 import LoginControl from "../Login/LoginControl";
 import { HashLink } from "react-router-hash-link";
-import { ProductsContext } from "../Products/Context/ProductsContext";
-import { UserContext } from "../Login/UserContext";
-import CartDropDown from "../Cart/CartDropDown";
+import { ProductsContext } from "../../Context/ProductsContext";
+import { UserContext } from "../../Context/UserContext";
 import SearchBar from "./SearchBar";
 
 const Navbar = () => {
@@ -28,11 +27,10 @@ const Navbar = () => {
   const toggleHidden = () => setCartIsHidden(!cartIsHidden);
 
   const getTotalCart = () => {
-    const total = cart.reduce((acc, item) => {
+    const total = cart?.reduce((acc, item) => {
       return acc + item.quantity;
     }, 0);
-    console.log("Total Cart", total);
-    setTotalCart(total);
+    setTotalCart(total || 0);
   };
 
   useEffect(() => {
@@ -78,7 +76,7 @@ const Navbar = () => {
           Contact
         </HashLink>
 
-        {isAdmin ? (
+        {isAdmin && (
           <Link
             to="/orderslist"
             onClick={() => setActiveNav("/orderslist")}
@@ -86,8 +84,6 @@ const Navbar = () => {
           >
             Orders List{" "}
           </Link>
-        ) : (
-          ""
         )}
         <button className="nav__btn" onClick={() => setIsOpen(true)}>
           <LoginControl />
@@ -109,14 +105,6 @@ const Navbar = () => {
             >
               <Badge badgeContent={totalCart} color="secondary">
                 <ShoppingCart />
-
-                {/* {cartIsHidden ? null : (
-                  <CartDropDown
-                    cartItems={cart}
-                    cartIsHidden={toggleHidden}
-                    totalCart={totalCart}
-                  />
-                )} */}
               </Badge>
             </IconButton>
           </div>

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { UserContext } from "./UserContext";
+import { UserContext } from "../../Context/UserContext";
 
 function LoginControl() {
   const { userName } = useContext(UserContext);

@@ -1,5 +1,5 @@
-import { useState, createContext, useEffect } from "react";
-import { useLocalStorage } from "./useLocalStorage";
+import { useState, createContext } from "react";
+import { useLocalStorage } from "../Components/Login/useLocalStorage";
 
 export const UserContext = createContext({});
 
@@ -10,7 +10,7 @@ function UserProvider({ children }) {
     email: "",
     password: "",
   });
-  const [userName, setUser] = useLocalStorage("user", "");
+  const [userName, setUser] = useLocalStorage("userName", "");
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage("login", false);
 
@@ -32,9 +32,8 @@ function UserProvider({ children }) {
   };
 
   const setLoggedInUser = async () => {
-    let u = localStorage.getItem("user");
+    let u = localStorage.getItem("userName");
     let parsedUser = JSON.parse(u);
-    console.log(parsedUser);
     if (parsedUser === "") {
       return "No User";
     } else {
@@ -47,11 +46,18 @@ function UserProvider({ children }) {
           email: body[0].email,
           password: body[0].password,
         });
-        // console.log("details: ", details);
       } else {
         return "No User";
       }
     }
+  };
+
+  const setLogout = () => {
+    setDetails({ id:"" , name: "", email: "", password: "" });
+    setUser("");
+    setIsLoggedIn(false);
+    setAdmin(false);
+    // localStorage.setItem("UserCart", JSON.stringify([]));
   };
 
   return (
@@ -70,6 +76,7 @@ function UserProvider({ children }) {
         setAdmin,
         fetchUser,
         setLoggedInUser,
+        setLogout,
       }}
     >
       {children}
